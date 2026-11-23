@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "DISTRICT WEAR — Premium streetwear from Casablanca",
+    "description": "Streetwear built for the streets. Discover the DISTRICT WEAR collection."
+  },
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "collections": "Collections",
+    "about": "About",
+    "contact": "Contact",
+    "cart": "Cart",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "brand": "DISTRICT WEAR — home"
+  },
+  "footer": {
+    "tagline": "Pieces for the street, made to last.",
+    "explore": "Explore",
+    "follow": "Follow",
+    "contact": "Contact",
+    "whatsapp": "Message us on WhatsApp",
+    "rights": "All rights reserved."
+  },
+  "language": {
+    "label": "Choose a language",
+    "fr": "FR",
+    "ar": "AR",
+    "en": "EN"
+  },
+  "common": {
+    "skipToContent": "Skip to content",
+    "currency": "MAD"
+  },
+  "home": {
+    "eyebrow": "Collection 01 — Fall/Winter",
+    "title": "DRESS THE DISTRICT",
+    "lede": "Clean cuts, fabrics that hold up. Streetwear from Casablanca, without the noise.",
+    "cta": "Explore the shop",
+    "secondary": "View collections",
+    "scroll": "Scroll"
+  }
+}

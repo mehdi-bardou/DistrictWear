@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Brand tokens. These three hex values are the only source colours in the
+   project; every other tone below is derived from them. Components must use
+   the generated Tailwind tokens (bg-forest-900, text-cream-100, ...).
+   --------------------------------------------------------------------------- */
+@theme inline {
+  /* Sampled from the supplied District Wear artwork. All other tones below
+     are derived from these three values only. */
+  --color-forest-950: #012515;
+  --color-forest-900: #013921;
+  --color-forest-800: #27543d;
+  --color-forest-700: #4d6f58;
+  --color-forest-600: #728a74;
+  --color-forest-500: #98a68f;
+  --color-forest-200: #d7d3bd;
+  --color-forest-100: #ebe2cc;
+
+  --color-cream-50: #fef7ec;
+  --color-cream-100: #fdeed9;
+  --color-cream-200: #cbcab4;
+  --color-cream-300: #97a68f;
+
+  --color-ink-950: #000000;
+  --color-ink-900: #090807;
+  --color-ink-700: #46413b;
+  --color-ink-500: #5e5850;
+  --color-ink-300: #a89e8f;
+
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), var(--font-arabic), system-ui, sans-serif;
+
+  --breakpoint-3xl: 96rem;
+}
+
+:root {
+  --page-bg: var(--color-cream-100);
+  --page-fg: var(--color-ink-900);
+  --rule: color-mix(in srgb, var(--color-ink-900) 16%, transparent);
+  --header-height: 4.5rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--rule);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--page-bg);
+    color: var(--page-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-forest-900);
+    color: var(--color-cream-100);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest-700);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4 {
+    letter-spacing: 0;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .shell {
+      padding-inline: 3.5rem;
+    }
+  }
+
+  .rule {
+    height: 1px;
+    background-color: var(--rule);
+  }
+
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(3.25rem, 12vw, 11rem);
+    line-height: 0.86;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+  }
+
+  .display-lg {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 6vw, 5rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
