@@ -115,6 +115,15 @@ describe("variantSchema", () => {
     expect(variantSchema.safeParse(input).success).toBe(true);
   });
 
+  it("normalizes blank optional colours from the form to null", () => {
+    const result = variantSchema.safeParse({ ...input, color_en: "", color_ar: "" });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.color_en).toBeNull();
+      expect(result.data.color_ar).toBeNull();
+    }
+  });
+
   it("coerces numeric strings from form fields", () => {
     expect(variantSchema.safeParse({ ...input, price: "890", stock: "12" }).success).toBe(true);
   });

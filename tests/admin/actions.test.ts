@@ -26,6 +26,7 @@ import {
   setProductFlag,
   setVariantStock,
 } from "../../app/admin/actions";
+import { uploadProductImage } from "../../app/admin/upload/actions";
 
 interface QueryResult {
   error: { message: string } | null;
@@ -77,6 +78,47 @@ const product = {
   sort_order: 2,
 };
 
+const collection = {
+  slug: "hiver-2026",
+  name_fr: "Hiver 2026",
+  name_ar: "شتاء 2026",
+  name_en: "Winter 2026",
+  description_fr: null,
+  description_ar: null,
+  description_en: null,
+  cover_image: null,
+  is_published: false,
+  sort_order: 1,
+};
+
+const variant = {
+  sku: "DW-SC-CRM-M",
+  color: "Crème",
+  color_en: null,
+  color_ar: null,
+  size: "M" as const,
+  price: 890,
+  stock: 12,
+  is_active: true,
+  sort_order: 0,
+};
+
+const image = {
+  storage_path: "prod-1/1.webp",
+  external_url: null,
+  alt_fr: null,
+  alt_ar: null,
+  alt_en: null,
+  sort_order: 0,
+};
+
+const settings = {
+  whatsapp_number: "212721919977",
+  contact_email: null,
+  instagram_url: null,
+  inquiry_logging_enabled: false,
+};
+
 beforeEach(() => {
   vi.clearAllMocks();
   mocks.requireAdmin.mockResolvedValue({ id: "admin-1", email: "owner@example.com" });
@@ -86,15 +128,39 @@ beforeEach(() => {
 });
 
 describe("admin action authorization", () => {
-  it("rejects an unauthenticated save before touching the database", async () => {
-    mocks.requireAdmin.mockRejectedValue(new Error("AUTH_REDIRECT"));
-    const db = fakeSupabase();
-    mocks.createClient.mockResolvedValue(db);
+  const uploadData = () => {
+    const formData = new FormData();
+    formData.set("file", new File(["fake"], "photo.webp", { type: "image/webp" }));
+    return formData;
+  };
 
-    await expect(saveCategory(category)).rejects.toThrow("AUTH_REDIRECT");
-    expect(db.calls.insert).not.toHaveBeenCalled();
-    expect(db.calls.update).not.toHaveBeenCalled();
-  });
+  const guardedActions = [
+    ["saveCategory", () => saveCategory(category)],
+    ["saveCollection", () => saveCollection(collection)],
+    ["saveProduct", () => saveProduct(product)],
+    ["saveVariant", () => saveVariant("prod-1", variant)],
+    ["saveImage", () => saveImage("prod-1", image)],
+    ["saveSettings", () => saveSettings(settings)],
+    ["setProductFlag", () => setProductFlag("prod-1", "is_published", true)],
+    ["setVariantStock", () => setVariantStock("var-1", 3)],
+    ["reorderImages", () => reorderImages(["img-1"])],
+    ["deleteCategory", () => deleteCategory("cat-1")],
+    ["deleteCollection", () => deleteCollection("col-1")],
+    ["deleteProduct", () => deleteProduct("prod-1")],
+    ["deleteVariant", () => deleteVariant("var-1")],
+    ["deleteImage", () => deleteImage("img-1")],
+    ["uploadProductImage", () => uploadProductImage("prod-1", uploadData())],
+  ] as const;
+
+  it.each(guardedActions)(
+    "%s rejects an unauthenticated caller before touching storage or the database",
+    async (_name, run) => {
+      mocks.requireAdmin.mockRejectedValue(new Error("AUTH_REDIRECT"));
+
+      await expect(run()).rejects.toThrow("AUTH_REDIRECT");
+      expect(mocks.createClient).not.toHaveBeenCalled();
+    },
+  );
 });
 
 describe("saveCategory", () => {

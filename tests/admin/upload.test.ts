@@ -44,6 +44,12 @@ describe("sanitizeImagePath", () => {
       "prod-1/image-abc123.webp",
     );
   });
+
+  it("cannot escape the product folder through the product id", () => {
+    expect(sanitizeImagePath("../../other", "photo.webp", "abc123", "webp")).toBe(
+      "other/photo-abc123.webp",
+    );
+  });
 });
 
 describe("isAllowedImage", () => {

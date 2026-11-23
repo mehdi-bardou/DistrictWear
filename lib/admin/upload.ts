@@ -25,6 +25,7 @@ export function sanitizeImagePath(
   unique: string,
   extension: string,
 ): string {
+  const safeProductId = productId.replace(/[^a-zA-Z0-9_-]/g, "") || "product";
   const basename = filename.split(/[/\\]/).pop() ?? "";
   const stem = basename
     .replace(/\.[^.]+$/, "")
@@ -32,5 +33,5 @@ export function sanitizeImagePath(
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
-  return `${productId}/${stem || "image"}-${unique}.${extension}`;
+  return `${safeProductId}/${stem || "image"}-${unique}.${extension}`;
 }

@@ -95,11 +95,17 @@ function VariantDialog({
           <div className="grid gap-2">
             <Label htmlFor={`v-color-${variant?.id ?? "new"}`}>Couleur (français)</Label>
             <Input id={`v-color-${variant?.id ?? "new"}`} {...register("color")} />
+            {errors.color && (
+              <span className="text-forest-800 text-xs">{errors.color.message}</span>
+            )}
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="grid gap-2">
               <Label htmlFor={`v-color-en-${variant?.id ?? "new"}`}>Couleur (anglais)</Label>
               <Input id={`v-color-en-${variant?.id ?? "new"}`} {...register("color_en")} />
+              {errors.color_en && (
+                <span className="text-forest-800 text-xs">{errors.color_en.message}</span>
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor={`v-color-ar-${variant?.id ?? "new"}`}>Couleur (arabe)</Label>
@@ -176,6 +182,11 @@ function VariantDialog({
             />
             Variante active
           </label>
+          {Object.keys(errors).length > 0 && (
+            <p role="alert" className="text-forest-800 text-xs">
+              Veuillez corriger les champs indiqués avant d&apos;enregistrer.
+            </p>
+          )}
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Annuler
@@ -280,7 +291,7 @@ export function VariantManager({
                 <td className="px-4 py-3">{variant.size}</td>
                 <td className="px-4 py-3">{variant.price} MAD</td>
                 <td className="px-4 py-3">
-                  <StockCell variant={variant} />
+                  <StockCell key={`${variant.id}-${variant.stock}`} variant={variant} />
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex justify-end gap-2">

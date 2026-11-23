@@ -106,6 +106,18 @@ function CollectionDialog({ collection }: { collection?: Collection }) {
             <Textarea id={`c-desc-${collection?.id ?? "new"}`} {...register("description_fr")} />
           </div>
           <div className="grid gap-2">
+            <Label htmlFor={`c-desc-ar-${collection?.id ?? "new"}`}>Description arabe</Label>
+            <Textarea
+              id={`c-desc-ar-${collection?.id ?? "new"}`}
+              dir="rtl"
+              {...register("description_ar")}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor={`c-desc-en-${collection?.id ?? "new"}`}>Description anglaise</Label>
+            <Textarea id={`c-desc-en-${collection?.id ?? "new"}`} {...register("description_en")} />
+          </div>
+          <div className="grid gap-2">
             <Label htmlFor={`c-cover-${collection?.id ?? "new"}`}>
               URL de l&apos;image de couverture
             </Label>

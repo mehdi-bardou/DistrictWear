@@ -16,6 +16,7 @@ const emptyToNull = (value: unknown) => (value === "" || value === undefined ? n
 const optionalUuid = z.preprocess(emptyToNull, z.string().uuid().nullable());
 const optionalUrl = z.preprocess(emptyToNull, z.string().url().nullable());
 const optionalEmail = z.preprocess(emptyToNull, z.string().trim().email().nullable());
+const optionalLocalizedName = z.preprocess(emptyToNull, localizedName.nullable());
 
 export const loginSchema = z.object({
   email: z.string().trim().min(1).email(),
@@ -62,8 +63,8 @@ export const productSchema = z.object({
 export const variantSchema = z.object({
   sku: z.string().trim().min(1).max(80),
   color: localizedName,
-  color_en: localizedName.nullable(),
-  color_ar: localizedName.nullable(),
+  color_en: optionalLocalizedName,
+  color_ar: optionalLocalizedName,
   size: z.enum(["XS", "S", "M", "L", "XL", "XXL"]),
   price: z.coerce.number().positive().max(999999),
   stock: z.coerce.number().int().min(0),
