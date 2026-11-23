@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { AdminNav } from "../../../components/admin/admin-nav";
+import { Button } from "../../../components/admin/ui/button";
+import { Toaster } from "../../../components/admin/ui/toaster";
 import { requireAdmin } from "../../../lib/admin/require-admin";
 import { signOut } from "../login/actions";
 
@@ -20,30 +23,23 @@ export default async function AdminPanelLayout({ children }: { children: React.R
           District Wear
         </Link>
         <p className="text-cream-200 mt-1 text-xs">Administration</p>
-        <nav
-          aria-label="Navigation administration"
-          className="mt-6 flex flex-wrap gap-2 md:grid md:gap-1"
-        >
-          {sections.map((section) => (
-            <Link
-              key={section.href}
-              href={section.href}
-              className="hover:bg-forest-800 focus-visible:outline-cream-100 rounded-md px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2"
-            >
-              {section.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="border-cream-200/20 mt-8 hidden border-t pt-4 text-xs md:block">
+        <AdminNav items={sections} />
+        <div className="border-cream-200/20 mt-6 border-t pt-4 text-xs md:mt-8">
           <p className="text-cream-200 truncate">{admin.email}</p>
           <form action={signOut} className="mt-3">
-            <button type="submit" className="text-cream-100 underline underline-offset-4">
+            <Button
+              type="submit"
+              variant="ghost"
+              size="sm"
+              className="text-cream-100 hover:bg-forest-800"
+            >
               Déconnexion
-            </button>
+            </Button>
           </form>
         </div>
       </aside>
       <main className="min-w-0 flex-1 p-5 md:p-8 lg:p-10">{children}</main>
+      <Toaster />
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Button } from "../../../components/admin/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../../../components/admin/ui/card";
 import { createClient } from "../../../lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -47,19 +49,20 @@ export default async function AdminDashboardPage() {
         ))}
       </section>
 
-      <section className="bg-cream-50 mt-12 rounded-xl border p-6">
-        <h2 className="font-display text-forest-950 text-2xl">Démarrage rapide</h2>
-        <p className="text-ink-700 mt-2 max-w-prose text-sm">
-          Ajoutez un produit, renseignez ses variantes et téléversez ses visuels. Les produits
-          restent invisibles en boutique tant que la publication n&apos;est pas activée.
-        </p>
-        <Link
-          href="/admin/products"
-          className="bg-forest-900 text-cream-100 mt-5 inline-block rounded-md px-4 py-2.5 text-sm font-medium hover:opacity-90"
-        >
-          Gérer les produits
-        </Link>
-      </section>
+      <Card className="mt-12">
+        <CardHeader>
+          <CardTitle>Démarrage rapide</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-ink-700 max-w-prose text-sm">
+            Ajoutez un produit, renseignez ses variantes et téléversez ses visuels. Les produits
+            restent invisibles en boutique tant que la publication n&apos;est pas activée.
+          </p>
+          <Button asChild className="mt-5">
+            <Link href="/admin/products">Gérer les produits</Link>
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }

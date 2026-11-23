@@ -3,6 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "../../../components/admin/ui/button";
+import { Input } from "../../../components/admin/ui/input";
+import { Label } from "../../../components/admin/ui/label";
 import { loginSchema, type LoginInput } from "../../../lib/admin/schemas";
 import { signIn } from "./actions";
 
@@ -32,31 +35,31 @@ export function LoginForm({ next }: { next: string }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5" noValidate>
-      <label className="grid gap-2 text-sm font-medium">
-        Adresse e-mail
-        <input
+      <div className="grid gap-2">
+        <Label htmlFor="admin-email">Adresse e-mail</Label>
+        <Input
+          id="admin-email"
           {...register("email")}
           type="email"
           autoComplete="username"
-          className="bg-cream-50 text-ink-900 focus-visible:border-forest-700 rounded-md border px-3 py-2.5 outline-none"
           aria-invalid={Boolean(errors.email)}
         />
         {errors.email && <span className="text-forest-800 text-xs">{errors.email.message}</span>}
-      </label>
+      </div>
 
-      <label className="grid gap-2 text-sm font-medium">
-        Mot de passe
-        <input
+      <div className="grid gap-2">
+        <Label htmlFor="admin-password">Mot de passe</Label>
+        <Input
+          id="admin-password"
           {...register("password")}
           type="password"
           autoComplete="current-password"
-          className="bg-cream-50 text-ink-900 focus-visible:border-forest-700 rounded-md border px-3 py-2.5 outline-none"
           aria-invalid={Boolean(errors.password)}
         />
         {errors.password && (
           <span className="text-forest-800 text-xs">{errors.password.message}</span>
         )}
-      </label>
+      </div>
 
       {serverError && (
         <p role="alert" className="bg-forest-100 text-forest-950 rounded-md px-3 py-2 text-sm">
@@ -64,13 +67,9 @@ export function LoginForm({ next }: { next: string }) {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="bg-forest-900 text-cream-100 rounded-md px-4 py-3 font-medium transition-opacity hover:opacity-90 disabled:opacity-60"
-      >
+      <Button type="submit" disabled={pending} className="py-3">
         {pending ? "Connexion…" : "Se connecter"}
-      </button>
+      </Button>
     </form>
   );
 }
