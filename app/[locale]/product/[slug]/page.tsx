@@ -81,7 +81,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </nav>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20">
-        <ProductGallery images={product.images} productName={product.name} />
+        <ProductGallery key={product.slug} images={product.images} productName={product.name} />
 
         <section aria-labelledby="product-details-heading" className="flex flex-col gap-6">
           {product.category && (
