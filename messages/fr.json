@@ -88,5 +88,28 @@
     "relatedTitle": "Vous aimerez aussi",
     "relatedCopy": "D'autres pièces du quartier à découvrir.",
     "priceLabel": "Prix"
+  },
+  "cart": {
+    "add": "Ajouter au panier",
+    "title": "Votre panier",
+    "open": "Consultez vos articles et finalisez votre commande sur WhatsApp.",
+    "close": "Fermer le panier",
+    "empty": "Votre panier est vide.",
+    "emptyCopy": "Découvrez la collection et trouvez votre prochaine pièce.",
+    "continueShopping": "Continuer mes achats",
+    "viewCart": "Voir le panier complet",
+    "remove": "Retirer",
+    "quantity": "Quantité",
+    "subtotal": "Sous-total",
+    "itemCount": "{count, plural, =1 {# article} other {# articles}}",
+    "checkout": "Commander sur WhatsApp",
+    "staleTitle": "Mise à jour nécessaire",
+    "priceChanged": "Le prix a changé",
+    "outOfStock": "Épuisé",
+    "update": "Mettre à jour",
+    "updateAll": "Tout mettre à jour",
+    "revalidateError": "Impossible de vérifier les prix et les stocks. Votre panier est conservé ; réessayez plus tard.",
+    "added": "Article ajouté au panier.",
+    "blocked": "Cet article est épuisé et ne peut pas être ajouté."
   }
 }

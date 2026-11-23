@@ -29,6 +29,8 @@ export type StorefrontVariant = {
 export type StorefrontImage = { id: string; url: string; alt: string };
 
 export type StorefrontProductDetail = StorefrontProduct & {
+  /** Canonical French name, used for the shop team's WhatsApp order lines. */
+  nameFr: string;
   variants: StorefrontVariant[];
   images: StorefrontImage[];
 };

@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { ShoppingBag } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { CartButton } from "@/components/cart/cart-button";
 import { Link } from "@/i18n/navigation";
+import { getStoreSettings } from "@/lib/storefront/settings";
 import { LanguageSwitcher } from "./language-switcher";
 import { MobileNav } from "./mobile-nav";
 
@@ -13,7 +14,7 @@ const links = [
 ] as const;
 
 export async function SiteHeader() {
-  const t = await getTranslations("nav");
+  const [t, settings] = await Promise.all([getTranslations("nav"), getStoreSettings()]);
 
   return (
     <header className="border-ink-900/12 bg-cream-100/92 sticky top-0 z-50 border-b backdrop-blur-md">
@@ -47,13 +48,7 @@ export async function SiteHeader() {
         <div className="flex items-center gap-3 md:gap-5">
           <LanguageSwitcher />
           <span className="bg-ink-900/20 hidden h-5 w-px sm:block" aria-hidden="true" />
-          <Link
-            href="/cart"
-            aria-label={t("cart")}
-            className="text-ink-900 relative flex size-9 items-center justify-center transition-transform hover:-translate-y-0.5"
-          >
-            <ShoppingBag size={20} strokeWidth={1.6} aria-hidden="true" />
-          </Link>
+          <CartButton whatsappNumber={settings.whatsappNumber} />
         </div>
       </div>
     </header>

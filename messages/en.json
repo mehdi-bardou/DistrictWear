@@ -88,5 +88,28 @@
     "relatedTitle": "You may also like",
     "relatedCopy": "More pieces from the district to discover.",
     "priceLabel": "Price"
+  },
+  "cart": {
+    "add": "Add to cart",
+    "title": "Your cart",
+    "open": "Review your items and complete your order on WhatsApp.",
+    "close": "Close cart",
+    "empty": "Your cart is empty.",
+    "emptyCopy": "Explore the collection and find your next piece.",
+    "continueShopping": "Continue shopping",
+    "viewCart": "View full cart",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "itemCount": "{count, plural, =1 {# item} other {# items}}",
+    "checkout": "Order on WhatsApp",
+    "staleTitle": "Update needed",
+    "priceChanged": "The price has changed",
+    "outOfStock": "Out of stock",
+    "update": "Update",
+    "updateAll": "Update all",
+    "revalidateError": "We could not verify prices and stock. Your cart is saved; please try again later.",
+    "added": "Item added to your cart.",
+    "blocked": "This item is out of stock and cannot be added."
   }
 }
