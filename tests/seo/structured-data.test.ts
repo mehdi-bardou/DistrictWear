@@ -41,6 +41,7 @@ describe("productJsonLd", () => {
     price: 890,
     currency: "MAD",
     url: "https://districtwear.example/fr/product/sweat",
+    inStock: true,
   };
 
   it("returns null when there is no published price", () => {
@@ -63,6 +64,12 @@ describe("productJsonLd", () => {
         availability: "https://schema.org/InStock",
       },
     });
+  });
+
+  it("reports OutOfStock when the product has no stock", () => {
+    const data = productJsonLd({ ...base, inStock: false });
+
+    expect(data?.offers).toMatchObject({ availability: "https://schema.org/OutOfStock" });
   });
 
   it("omits description and image when absent or blank", () => {

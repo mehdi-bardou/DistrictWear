@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: CartPageProps): Promise<Metad
 
 export default async function CartPage({ params }: CartPageProps) {
   const { locale: rawLocale } = await params;
-  setRequestLocale(rawLocale);
   const locale: Locale = rawLocale === "ar" || rawLocale === "en" ? rawLocale : "fr";
+  setRequestLocale(locale);
 
   const [cartT, commonT, whatsappT, settings] = await Promise.all([
     getTranslations({ locale, namespace: "cart" }),

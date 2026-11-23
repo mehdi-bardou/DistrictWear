@@ -74,6 +74,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     price: product.price,
     currency: common("currency"),
     url: `${siteUrl()}${localizedPath(locale, `/product/${product.slug}`)}`,
+    inStock: product.hasStock,
   });
 
   return (

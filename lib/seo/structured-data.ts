@@ -52,6 +52,7 @@ export function productJsonLd(input: {
   price: number | null;
   currency: string;
   url: string;
+  inStock: boolean;
 }): Record<string, unknown> | null {
   if (input.price === null) return null;
 
@@ -64,7 +65,7 @@ export function productJsonLd(input: {
       "@type": "Offer",
       price: input.price,
       priceCurrency: input.currency,
-      availability: `${SCHEMA_URL}/InStock`,
+      availability: `${SCHEMA_URL}/${input.inStock ? "InStock" : "OutOfStock"}`,
     },
   };
 
