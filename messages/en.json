@@ -106,6 +106,7 @@
     "staleTitle": "Update needed",
     "unavailable": "This item is no longer available. Please remove it from your cart.",
     "priceChanged": "The price has changed",
+    "stockChanged": "The available stock has changed",
     "outOfStock": "Out of stock",
     "update": "Update",
     "updateAll": "Update all",

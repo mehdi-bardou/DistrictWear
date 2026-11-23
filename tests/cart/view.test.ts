@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { deriveCartView, type RevalidationResult } from "../../lib/cart/view";
+import { applyFreshValues, deriveCartView, type RevalidationResult } from "../../lib/cart/view";
 import type { CartLine, FreshVariant } from "../../lib/cart/types";
 
 function makeLine(overrides: Partial<CartLine> = {}): CartLine {
@@ -130,5 +130,55 @@ describe("deriveCartView", () => {
     expect(view.canOrder).toBe(false);
     expect(view.subtotal).toBe(0);
     expect(view.count).toBe(0);
+  });
+});
+
+describe("applyFreshValues", () => {
+  it("clamps a stored quantity down to a decreased fresh stock", () => {
+    const line = makeLine({ stock: 10, quantity: 5 });
+    const result: RevalidationResult = {
+      status: "fresh",
+      fresh: [freshFor(line, { stock: 3 })],
+    };
+    const reconciled = deriveCartView([line], result).lines;
+
+    expect(applyFreshValues([line], reconciled)).toEqual([
+      { ...line, price: 250, stock: 3, quantity: 3 },
+    ]);
+  });
+
+  it("orders only the clamped quantity after a stock-only decrease", () => {
+    const line = makeLine({ stock: 10, quantity: 5 });
+    const result: RevalidationResult = {
+      status: "fresh",
+      fresh: [freshFor(line, { stock: 3 })],
+    };
+    const updated = applyFreshValues([line], deriveCartView([line], result).lines);
+    const view = deriveCartView(updated, result);
+
+    expect(view.canOrder).toBe(true);
+    expect(view.lines[0].quantity).toBe(3);
+    expect(view.subtotal).toBe(750);
+  });
+
+  it("keeps a zero-stock update stale and unorderable", () => {
+    const line = makeLine({ stock: 10, quantity: 5 });
+    const result: RevalidationResult = {
+      status: "fresh",
+      fresh: [freshFor(line, { stock: 0, available: false })],
+    };
+    const updated = applyFreshValues([line], deriveCartView([line], result).lines);
+    const view = deriveCartView(updated, result);
+
+    expect(updated[0]).toMatchObject({ stock: 0, quantity: 1 });
+    expect(view.lines[0]).toMatchObject({ stock: 0, stale: true });
+    expect(view.canOrder).toBe(false);
+  });
+
+  it("leaves a line unchanged when its fresh record has no price or stock", () => {
+    const line = makeLine({ stock: 10, quantity: 5 });
+    const missing = deriveCartView([line], { status: "fresh", fresh: [] }).lines;
+
+    expect(applyFreshValues([line], missing)).toEqual([line]);
   });
 });

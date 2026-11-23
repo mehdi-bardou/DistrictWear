@@ -8,7 +8,7 @@ import { revalidateCartLines } from "@/app/[locale]/cart/actions";
 import { buildCheckout } from "@/lib/cart/checkout";
 import { useCartStore } from "@/lib/cart/store";
 import type { FreshVariant, ReconciledLine } from "@/lib/cart/types";
-import { deriveCartView, type RevalidationResult } from "@/lib/cart/view";
+import { applyFreshValues, deriveCartView, type RevalidationResult } from "@/lib/cart/view";
 import { formatPrice } from "@/lib/storefront/images";
 import type { Locale } from "@/lib/storefront/types";
 import { cn } from "@/lib/utils";
@@ -107,26 +107,13 @@ export function CartPanel({
   });
 
   function updateLine(line: ReconciledLine) {
-    const price = line.currentPrice;
-    const stock = line.currentStock;
-    if (price === null || stock === null) return;
+    if (line.currentPrice === null || line.currentStock === null) return;
 
-    replace(
-      lines.map((item) => (item.variantId === line.variantId ? { ...item, price, stock } : item)),
-    );
+    replace(applyFreshValues(lines, [line]));
   }
 
   function updateAll() {
-    replace(
-      lines.map((item) => {
-        const current = reconciled.find((line) => line.variantId === item.variantId);
-        const price = current?.currentPrice;
-        const stock = current?.currentStock;
-        return typeof price === "number" && typeof stock === "number"
-          ? { ...item, price, stock }
-          : item;
-      }),
-    );
+    replace(applyFreshValues(lines, reconciled));
   }
 
   const isPage = mode === "page";
@@ -243,6 +230,13 @@ export function CartPanel({
                           {formatPrice(line.currentPrice, locale)} {currency}
                         </p>
                       )}
+                      {line.currentPrice === line.price &&
+                        line.currentStock !== null &&
+                        line.currentStock !== line.stock && (
+                          <p className="text-ink-700 mt-1">
+                            {t("stockChanged")} — {line.stock} → {line.currentStock}
+                          </p>
+                        )}
                       <div className="mt-3 flex flex-wrap gap-4">
                         {line.currentPrice !== null && line.currentStock !== null && (
                           <button

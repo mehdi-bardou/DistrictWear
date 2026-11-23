@@ -1,4 +1,5 @@
 import type { CartLine, FreshVariant, ReconciledLine } from "./types";
+import { deriveCartView } from "./view";
 
 function round2(value: number): number {
   return Math.round(value * 100) / 100;
@@ -47,17 +48,9 @@ export function cartCount(lines: CartLine[]): number {
   return lines.reduce((count, line) => count + line.quantity, 0);
 }
 
+/** Task 4.1 compatibility adapter: one reconciliation rule shared with the cart view. */
 export function reconcileLines(lines: CartLine[], fresh: FreshVariant[]): ReconciledLine[] {
-  const freshById = new Map(fresh.map((variant) => [variant.variantId, variant]));
-
-  return lines.map((line) => {
-    const current = freshById.get(line.variantId);
-    if (!current) return { ...line, stale: false, currentPrice: null, currentStock: null };
-
-    const stale =
-      line.price !== current.price || line.stock !== current.stock || !current.available;
-    return { ...line, stale, currentPrice: current.price, currentStock: current.stock };
-  });
+  return deriveCartView(lines, { status: "fresh", fresh }).lines;
 }
 
 export function staleLines(lines: ReconciledLine[]): ReconciledLine[] {

@@ -174,15 +174,19 @@ describe("reconcileLines", () => {
     ).toEqual([{ ...line, stale: true, currentPrice: 250, currentStock: 5 }]);
   });
 
-  it("leaves lines without a fresh entry untouched and not stale", () => {
+  it("never treats a missing fresh record as fresh (delegates to deriveCartView)", () => {
     const line = makeLine();
 
-    expect(reconcileLines([line], [])).toEqual([
-      { ...line, stale: false, currentPrice: null, currentStock: null },
-    ]);
-    expect(
-      reconcileLines([line], [{ variantId: "other", price: 1, stock: 1, available: true }]),
-    ).toEqual([{ ...line, stale: false, currentPrice: null, currentStock: null }]);
+    const missing = reconcileLines([line], []);
+    const other = reconcileLines(
+      [line],
+      [{ variantId: "other", price: 1, stock: 1, available: true }],
+    );
+
+    expect(missing).toEqual([{ ...line, stale: true, currentPrice: null, currentStock: null }]);
+    expect(other).toEqual([{ ...line, stale: true, currentPrice: null, currentStock: null }]);
+    expect(staleLines(missing)).toEqual(missing);
+    expect(staleLines(other)).toEqual(other);
   });
 
   it("filters only stale reconciled lines", () => {

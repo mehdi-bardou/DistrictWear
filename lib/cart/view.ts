@@ -17,6 +17,25 @@ export type CartView = {
 };
 
 /**
+ * Applies verified price/stock to stored lines, clamping the quantity to the new
+ * stock so an accepted update can never order more units than the variant has.
+ * Lines without a verified record are left untouched; zero-stock lines keep a
+ * minimum quantity of one but stay stale and unorderable in `deriveCartView`.
+ */
+export function applyFreshValues(lines: CartLine[], reconciled: ReconciledLine[]): CartLine[] {
+  const currentById = new Map(reconciled.map((line) => [line.variantId, line]));
+
+  return lines.map((item) => {
+    const current = currentById.get(item.variantId);
+    const price = current?.currentPrice;
+    const stock = current?.currentStock;
+    return typeof price === "number" && typeof stock === "number"
+      ? { ...item, price, stock, quantity: Math.max(1, Math.min(item.quantity, stock)) }
+      : item;
+  });
+}
+
+/**
  * Pure cart view derivation: original lines are never overwritten. A fresh result
  * that omits a variant means the server record is gone, so that line is unverified
  * and must be removed explicitly by the shopper.
