@@ -256,7 +256,7 @@ describe("getCollectionBySlug", () => {
       ["https://evil.example.com/cover.jpg", null],
       ["https://images.unsplash.com.evil.example.com/cover.jpg", null],
       ["https://supabase.co/cover.jpg", null],
-      ["http://images.unsplash.com/cover.jpg", "http://images.unsplash.com/cover.jpg"],
+      ["http://images.unsplash.com/cover.jpg", null],
       ["ftp://images.unsplash.com/cover.jpg", null],
       ["javascript:alert(1)", null],
       ["not-a-url", null],

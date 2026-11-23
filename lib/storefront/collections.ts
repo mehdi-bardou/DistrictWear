@@ -44,8 +44,9 @@ function localizedText(values: Record<Locale, string | null>, locale: Locale): s
 }
 
 /**
- * Only hosts declared in next.config.ts may reach next/image. Anything else is
- * dropped so an admin-entered cover URL cannot break the storefront at runtime.
+ * Only the https hosts declared in next.config.ts may reach next/image. Anything
+ * else is dropped so an admin-entered cover URL cannot break the storefront at
+ * runtime.
  */
 function allowedCoverUrl(value: string | null): string | null {
   const candidate = value?.trim();
@@ -53,7 +54,7 @@ function allowedCoverUrl(value: string | null): string | null {
 
   try {
     const url = new URL(candidate);
-    if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+    if (url.protocol !== "https:") return null;
     const host = url.hostname.toLowerCase();
     const supabaseHost = host.length > SUPABASE_SUFFIX.length && host.endsWith(SUPABASE_SUFFIX);
     return host === UNSPLASH_HOST || supabaseHost ? candidate : null;

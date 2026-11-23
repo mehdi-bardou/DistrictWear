@@ -25,7 +25,17 @@ export default async function ContactPage({ params }: ContactPageProps) {
 
   const digits = settings.whatsappNumber.replace(/\D/g, "");
   const whatsapp = PHONE_PATTERN.test(digits) ? digits : "";
-  const hasChannels = Boolean(settings.contactEmail || settings.instagramUrl || whatsapp);
+  const instagramUrl = (() => {
+    const value = settings.instagramUrl;
+    if (!value) return null;
+    try {
+      const url = new URL(value);
+      return url.protocol === "http:" || url.protocol === "https:" ? value : null;
+    } catch {
+      return null;
+    }
+  })();
+  const hasChannels = Boolean(settings.contactEmail || instagramUrl || whatsapp);
 
   return (
     <section className="shell pt-16 pb-20 md:pt-24 xl:pb-28">
@@ -60,14 +70,14 @@ export default async function ContactPage({ params }: ContactPageProps) {
                 </div>
               )}
 
-              {settings.instagramUrl && (
+              {instagramUrl && (
                 <div className="border-ink-900/20 flex flex-col gap-2 border-b py-6 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
                   <dt className="text-ink-500 text-xs font-bold tracking-[0.2em] uppercase">
                     {t("instagramLabel")}
                   </dt>
                   <dd className="text-ink-900 text-base break-words">
                     <a
-                      href={settings.instagramUrl}
+                      href={instagramUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 transition-opacity hover:opacity-70"
