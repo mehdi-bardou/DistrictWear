@@ -7,8 +7,33 @@ import { createPublicClient } from "@/lib/supabase/public";
 /** node:crypto backs the server-derived rate key. */
 export const runtime = "nodejs";
 
-function requestIp(request: Request): string | undefined {
-  return request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip") ?? undefined;
+function nonBlank(value: string | null): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+}
+
+/**
+ * Prefer the IP Netlify's edge sets over headers a direct caller can forge.
+ * On other hosts that header is absent, so the original forwarded/real-IP
+ * contract still applies. Blank entries never suppress the next source.
+ */
+function requestIp(request: Request): string {
+  const headers = request.headers;
+
+  const netlifyIp = nonBlank(headers.get("x-nf-client-connection-ip"));
+  if (netlifyIp) return netlifyIp;
+
+  const forwardedIp = headers
+    .get("x-forwarded-for")
+    ?.split(",")
+    .map((entry) => entry.trim())
+    .find((entry) => entry.length > 0);
+  if (forwardedIp) return forwardedIp;
+
+  const realIp = nonBlank(headers.get("x-real-ip"));
+  if (realIp) return realIp;
+
+  return "unknown";
 }
 
 export async function POST(request: Request): Promise<Response> {

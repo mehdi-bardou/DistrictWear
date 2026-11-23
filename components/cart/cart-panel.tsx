@@ -5,19 +5,14 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { revalidateCartLines } from "@/app/[locale]/cart/actions";
+import { buildCheckout } from "@/lib/cart/checkout";
 import { useCartStore } from "@/lib/cart/store";
 import type { FreshVariant, ReconciledLine } from "@/lib/cart/types";
 import { deriveCartView, type RevalidationResult } from "@/lib/cart/view";
 import { formatPrice } from "@/lib/storefront/images";
 import type { Locale } from "@/lib/storefront/types";
 import { cn } from "@/lib/utils";
-import {
-  buildWhatsAppMessage,
-  createReference,
-  whatsappUrl,
-  type WhatsAppCopy,
-  type WhatsAppLine,
-} from "@/lib/whatsapp/message";
+import type { WhatsAppCopy } from "@/lib/whatsapp/message";
 
 type CartPanelProps = {
   locale: Locale;
@@ -31,17 +26,6 @@ type CartPanelProps = {
 
 type FreshResult =
   { key: string; status: "fresh"; fresh: FreshVariant[] } | { key: string; status: "error" };
-
-/** One mapping for both the WhatsApp message and its optional inquiry log. */
-function toInquiryItems(lines: ReconciledLine[]): WhatsAppLine[] {
-  return lines.map((line) => ({
-    nameFr: line.nameFr,
-    color: line.color,
-    size: line.size,
-    quantity: line.quantity,
-    price: line.price,
-  }));
-}
 
 /** Shared cart list for the header drawer and the full cart page. */
 export function CartPanel({
@@ -111,21 +95,16 @@ export function CartPanel({
     };
   }, [currentKey, hydrated, lines, result]);
 
-  // One object for both the link and the optional log, so the reference cannot diverge.
-  // React Compiler memoizes this derivation; a manual useMemo on `reconciled` is rejected by
-  // react-hooks/preserve-manual-memoization because the derived array is treated as mutable.
-  let checkout: { reference: string; message: string; url: string } | null = null;
-  if (canOrder && reconciled.length <= 20) {
-    const reference = createReference();
-    const message = buildWhatsAppMessage({
-      lines: toInquiryItems(reconciled),
-      locale,
-      reference,
-      copy: whatsappCopy,
-    });
-    const url = whatsappUrl(whatsappNumber, message);
-    if (url) checkout = { reference, message, url };
-  }
+  // One object for both the WhatsApp link and the optional log: the reference,
+  // items and total cannot diverge between the two channels.
+  const checkout = buildCheckout({
+    canOrder,
+    lines: reconciled,
+    locale,
+    copy: whatsappCopy,
+    whatsappNumber,
+    total: subtotal,
+  });
 
   function updateLine(line: ReconciledLine) {
     const price = line.currentPrice;
@@ -322,8 +301,8 @@ export function CartPanel({
                   reference: checkout.reference,
                   locale,
                   message: checkout.message,
-                  items: toInquiryItems(reconciled),
-                  total: subtotal,
+                  items: checkout.items,
+                  total: checkout.total,
                 }),
               }).catch((error: unknown) => {
                 console.error("[cart] inquiry logging failed", error);

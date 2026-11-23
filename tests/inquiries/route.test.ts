@@ -101,6 +101,63 @@ describe("POST /api/inquiries", () => {
     expect(calls[0].args.p_key).toBe(expectedKey("198.51.100.4"));
   });
 
+  it("prefers Netlify's platform IP over both client-controllable IP headers", async () => {
+    const calls = fakeClient();
+
+    await POST(
+      request({
+        "x-nf-client-connection-ip": " 203.0.113.9 ",
+        "x-forwarded-for": "198.51.100.4",
+        "x-real-ip": "192.0.2.7",
+      }),
+    );
+
+    expect(calls[0].args.p_key).toBe(expectedKey("203.0.113.9"));
+  });
+
+  it("prefers the first non-blank forwarded entry over x-real-ip when both are present", async () => {
+    const calls = fakeClient();
+
+    await POST(
+      request({
+        "x-forwarded-for": " , 203.0.113.7 , 10.0.0.1",
+        "x-real-ip": "198.51.100.4",
+      }),
+    );
+
+    expect(calls[0].args.p_key).toBe(expectedKey("203.0.113.7"));
+  });
+
+  it("falls back to x-real-ip when x-forwarded-for is blank", async () => {
+    const calls = fakeClient();
+
+    await POST(request({ "x-forwarded-for": "   ", "x-real-ip": "198.51.100.4" }));
+
+    expect(calls[0].args.p_key).toBe(expectedKey("198.51.100.4"));
+  });
+
+  it("ignores a blank Netlify header and uses the forwarded IP", async () => {
+    const calls = fakeClient();
+
+    await POST(request({ "x-nf-client-connection-ip": "  ", "x-forwarded-for": "203.0.113.7" }));
+
+    expect(calls[0].args.p_key).toBe(expectedKey("203.0.113.7"));
+  });
+
+  it("uses the unknown fallback when every IP header is blank", async () => {
+    const calls = fakeClient();
+
+    await POST(
+      request({
+        "x-nf-client-connection-ip": "",
+        "x-forwarded-for": " , ",
+        "x-real-ip": "",
+      }),
+    );
+
+    expect(calls[0].args.p_key).toBe(expectedKey("unknown"));
+  });
+
   it("uses the unknown fallback when neither IP header is present", async () => {
     const calls = fakeClient();
 
