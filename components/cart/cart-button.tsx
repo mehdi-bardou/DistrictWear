@@ -64,7 +64,7 @@ export function CartButton({ whatsappNumber }: CartButtonProps) {
 
       <Dialog.Portal>
         <Dialog.Overlay className="bg-ink-900/50 fixed inset-0 z-50" />
-        <Dialog.Content className="bg-cream-50 fixed inset-y-0 end-0 z-50 flex w-full max-w-md flex-col gap-5 p-5 shadow-lg focus:outline-none md:p-7">
+        <Dialog.Content className="bg-cream-50 fixed inset-y-0 end-0 z-50 flex w-full max-w-md flex-col gap-5 p-5 shadow-lg md:p-7">
           <div className="flex items-start justify-between gap-4">
             <div>
               <Dialog.Title className="font-display text-forest-900 text-2xl">

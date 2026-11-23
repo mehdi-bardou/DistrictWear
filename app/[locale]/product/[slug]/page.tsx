@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { ProductPurchase } from "@/components/cart/product-purchase";
 import { ProductCard } from "@/components/storefront/product-card";
 import { ProductGallery } from "@/components/storefront/product-gallery";
-import { VariantPicker } from "@/components/storefront/variant-picker";
 import { Link } from "@/i18n/navigation";
 import {
   getProductBySlug,
@@ -103,22 +102,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <p className={`text-sm ${product.hasStock ? "text-forest-700" : "text-ink-500"}`}>
             {product.hasStock ? t("inStock") : t("outOfStock")}
           </p>
-          <VariantPicker
+          <ProductPurchase
             variants={product.variants}
             locale={locale}
             currency={common("currency")}
-            renderAction={(variant) => (
-              <AddToCartButton
-                key={variant.id}
-                variant={variant}
-                productId={product.id}
-                slug={product.slug}
-                name={product.name}
-                nameFr={product.nameFr}
-                image={product.image?.url ?? null}
-                category={product.category}
-              />
-            )}
+            productId={product.id}
+            slug={product.slug}
+            name={product.name}
+            nameFr={product.nameFr}
+            image={product.image?.url ?? null}
+            category={product.category}
           />
         </section>
       </div>

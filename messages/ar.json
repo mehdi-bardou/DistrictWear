@@ -104,6 +104,7 @@
     "itemCount": "{count, plural, =0 {لا توجد قطع} one {قطعة واحدة} two {قطعتان} few {# قطع} many {# قطعة} other {# قطعة}}",
     "checkout": "الطلب عبر واتساب",
     "staleTitle": "تحتاج إلى تحديث",
+    "unavailable": "هذه القطعة لم تعد متوفرة. يُرجى إزالتها من السلة.",
     "priceChanged": "تغيّر السعر",
     "outOfStock": "نفد المخزون",
     "update": "تحديث",

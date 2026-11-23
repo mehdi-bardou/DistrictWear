@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { revalidateCartLines } from "@/app/[locale]/cart/actions";
-import { cartCount, cartSubtotal, reconcileLines } from "@/lib/cart/cart";
 import { useCartStore } from "@/lib/cart/store";
 import type { FreshVariant, ReconciledLine } from "@/lib/cart/types";
+import { deriveCartView, type RevalidationResult } from "@/lib/cart/view";
 import { formatPrice } from "@/lib/storefront/images";
 import type { Locale } from "@/lib/storefront/types";
 import { cn } from "@/lib/utils";
@@ -27,13 +27,8 @@ type CartPanelProps = {
   onNavigate?: () => void;
 };
 
-type RevalidationState = "pending" | "fresh" | "error";
-
 type FreshResult =
-  | { key: string; status: "fresh"; fresh: FreshVariant[] }
-  | { key: string; status: "error"; fresh: FreshVariant[] };
-
-const EMPTY_FRESH: FreshVariant[] = [];
+  { key: string; status: "fresh"; fresh: FreshVariant[] } | { key: string; status: "error" };
 
 /** Shared cart list for the header drawer and the full cart page. */
 export function CartPanel({
@@ -55,10 +50,24 @@ export function CartPanel({
 
   const currentKey = lines.map((line) => line.variantId).join("|");
   const current = result?.key === currentKey ? result : null;
-  const fresh = current?.fresh ?? EMPTY_FRESH;
-  const revalidation: RevalidationState =
-    lines.length === 0 ? "fresh" : (current?.status ?? "pending");
-  const reconciled = useMemo(() => reconcileLines(lines, fresh), [lines, fresh]);
+  const revalidationResult: RevalidationResult | null =
+    lines.length === 0
+      ? { status: "fresh", fresh: [] }
+      : current?.status === "fresh"
+        ? { status: "fresh", fresh: current.fresh }
+        : current?.status === "error"
+          ? { status: "error" }
+          : null;
+  const view = deriveCartView(lines, revalidationResult);
+  const {
+    status: revalidation,
+    lines: reconciled,
+    stale,
+    subtotal,
+    count,
+    canOrder,
+    hasUnavailable,
+  } = view;
 
   useEffect(() => {
     let active = true;
@@ -81,23 +90,15 @@ export function CartPanel({
         if (active) setResult({ key, status: "fresh", fresh: freshVariants });
       })
       .catch(() => {
-        if (active) setResult({ key, status: "error", fresh: [] });
+        if (active) setResult({ key, status: "error" });
       });
     return () => {
       active = false;
     };
   }, [currentKey, hydrated, lines, result]);
 
-  const stale = reconciled.filter((line) => line.stale);
-  const subtotal = cartSubtotal(reconciled.filter((line) => !line.stale && line.stock > 0));
-  const canOrder =
-    revalidation === "fresh" &&
-    reconciled.length > 0 &&
-    reconciled.every((line) => !line.stale && line.stock > 0);
-
-  const checkoutUrl = useMemo(() => {
-    if (!canOrder || reconciled.length > 20) return null;
-
+  let checkoutUrl: string | null = null;
+  if (canOrder && reconciled.length <= 20) {
     const message = buildWhatsAppMessage({
       lines: reconciled.map((line) => ({
         nameFr: line.nameFr,
@@ -110,8 +111,8 @@ export function CartPanel({
       reference: createReference(),
       copy: whatsappCopy,
     });
-    return whatsappUrl(whatsappNumber, message);
-  }, [canOrder, locale, reconciled, whatsappCopy, whatsappNumber]);
+    checkoutUrl = whatsappUrl(whatsappNumber, message);
+  }
 
   function updateLine(line: ReconciledLine) {
     const price = line.currentPrice;
@@ -164,7 +165,7 @@ export function CartPanel({
         </div>
       ) : (
         <>
-          {stale.length > 0 && (
+          {stale.some((line) => line.currentPrice !== null && line.currentStock !== null) && (
             <button
               type="button"
               onClick={updateAll}
@@ -236,7 +237,11 @@ export function CartPanel({
                       aria-live="polite"
                       className="border-forest-200 bg-cream-50 border p-3 text-xs leading-relaxed"
                     >
-                      <p className="text-forest-800 font-bold">{t("staleTitle")}</p>
+                      <p className="text-forest-800 font-bold">
+                        {hasUnavailable && line.currentPrice === null && line.currentStock === null
+                          ? t("unavailable")
+                          : t("staleTitle")}
+                      </p>
                       {line.currentStock === 0 && (
                         <p className="text-ink-700 mt-1">{t("outOfStock")}</p>
                       )}
@@ -247,14 +252,15 @@ export function CartPanel({
                         </p>
                       )}
                       <div className="mt-3 flex flex-wrap gap-4">
-                        <button
-                          type="button"
-                          onClick={() => updateLine(line)}
-                          disabled={line.currentPrice === null || line.currentStock === null}
-                          className="bg-forest-900 text-cream-100 px-4 py-2 text-xs font-bold uppercase transition-opacity hover:opacity-85 disabled:opacity-50"
-                        >
-                          {t("update")}
-                        </button>
+                        {line.currentPrice !== null && line.currentStock !== null && (
+                          <button
+                            type="button"
+                            onClick={() => updateLine(line)}
+                            className="bg-forest-900 text-cream-100 px-4 py-2 text-xs font-bold uppercase transition-opacity hover:opacity-85"
+                          >
+                            {t("update")}
+                          </button>
+                        )}
                         <button
                           type="button"
                           onClick={() => remove(line.variantId)}
@@ -281,7 +287,7 @@ export function CartPanel({
             {formatPrice(subtotal, locale)} {currency}
           </p>
         </div>
-        <p className="text-ink-500 mt-2 text-xs">{t("itemCount", { count: cartCount(lines) })}</p>
+        <p className="text-ink-500 mt-2 text-xs">{t("itemCount", { count })}</p>
 
         <a
           href={checkoutUrl ?? undefined}

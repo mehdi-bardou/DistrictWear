@@ -104,6 +104,7 @@
     "itemCount": "{count, plural, =1 {# article} other {# articles}}",
     "checkout": "Commander sur WhatsApp",
     "staleTitle": "Mise à jour nécessaire",
+    "unavailable": "Cet article n'est plus disponible. Retirez-le du panier.",
     "priceChanged": "Le prix a changé",
     "outOfStock": "Épuisé",
     "update": "Mettre à jour",

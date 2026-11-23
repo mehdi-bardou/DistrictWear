@@ -29,6 +29,12 @@ describe("revalidateCartLines", () => {
     expect(mocks.getVariantAvailability).toHaveBeenCalledWith([firstId, secondId]);
   });
 
+  it("propagates catalog failures instead of resolving with unverified data", async () => {
+    mocks.getVariantAvailability.mockRejectedValue(new Error("db offline"));
+
+    await expect(revalidateCartLines([firstId])).rejects.toThrow("db offline");
+  });
+
   it("rejects more than twenty ids before querying the catalog", async () => {
     const ids = Array.from(
       { length: 21 },

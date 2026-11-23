@@ -413,13 +413,14 @@ export async function getVariantAvailability(ids: string[]): Promise<FreshVarian
   if (!Array.isArray(ids) || ids.length === 0 || ids.length > MAX_AVAILABILITY_IDS) return [];
   if (ids.some((id) => typeof id !== "string" || !UUID_PATTERN.test(id))) return [];
 
-  return withClient([], async (client) => {
+  try {
+    const client = await createPublicClient();
     const { data, error } = await client
       .from("product_variants")
       .select("*")
       .in("id", ids)
       .eq("is_active", true);
-    if (reportError("variant availability", error)) return [];
+    if (error) throw new Error(`[storefront] variant availability: ${error.message}`);
 
     return (Array.isArray(data) ? data : [])
       .filter((variant) => variant.is_active)
@@ -429,7 +430,12 @@ export async function getVariantAvailability(ids: string[]): Promise<FreshVarian
         stock: variant.stock,
         available: variant.stock > 0,
       }));
-  });
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "[storefront] variant availability failed",
+    );
+    throw error;
+  }
 }
 
 export async function getRelatedProducts(

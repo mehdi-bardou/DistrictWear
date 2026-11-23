@@ -728,11 +728,11 @@ describe("getVariantAvailability", () => {
     expect(mocks.createPublicClient).not.toHaveBeenCalled();
   });
 
-  it("returns an empty array and logs when the query fails", async () => {
+  it("throws and logs when the query fails so failure is never mistaken for fresh data", async () => {
     const log = vi.spyOn(console, "error").mockImplementation(() => {});
     setup({ product_variants: [{ data: null, error: { message: "db offline" } }] });
 
-    await expect(getVariantAvailability([firstId])).resolves.toEqual([]);
+    await expect(getVariantAvailability([firstId])).rejects.toThrow("db offline");
     expect(log).toHaveBeenCalledWith(expect.stringContaining("db offline"));
   });
 });
