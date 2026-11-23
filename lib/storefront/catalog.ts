@@ -57,8 +57,8 @@ async function withClient<T>(fallback: T, work: (client: Client) => Promise<T>):
   }
 }
 
-function emptyPage(page: number): ProductPage {
-  return { items: [], total: 0, page, pageCount: 0 };
+function emptyPage(): ProductPage {
+  return { items: [], total: 0, page: 1, pageCount: 0 };
 }
 
 function safeLimit(value: number, fallback: number): number {
@@ -255,7 +255,7 @@ export async function getProducts(locale: Locale, query: ProductQuery = {}): Pro
       : DEFAULT_PAGE_SIZE;
   const pageSize = Math.min(48, Math.max(1, requestedPageSize));
 
-  return withClient(emptyPage(page), async (client) => {
+  return withClient(emptyPage(), async (client) => {
     let categoryId: string | null = null;
     const categorySlug = query.category?.trim();
     if (categorySlug) {
@@ -265,9 +265,9 @@ export async function getProducts(locale: Locale, query: ProductQuery = {}): Pro
         .eq("slug", categorySlug)
         .eq("is_active", true)
         .limit(1);
-      if (reportError("product category", error)) return emptyPage(page);
+      if (reportError("product category", error)) return emptyPage();
       const row = Array.isArray(data) ? data[0] : undefined;
-      if (!row) return emptyPage(page);
+      if (!row) return emptyPage();
       categoryId = row.id;
     }
 
@@ -280,9 +280,9 @@ export async function getProducts(locale: Locale, query: ProductQuery = {}): Pro
         .eq("slug", collectionSlug)
         .eq("is_published", true)
         .limit(1);
-      if (reportError("product collection", error)) return emptyPage(page);
+      if (reportError("product collection", error)) return emptyPage();
       const row = Array.isArray(data) ? data[0] : undefined;
-      if (!row) return emptyPage(page);
+      if (!row) return emptyPage();
       collectionId = row.id;
     }
 
@@ -298,18 +298,20 @@ export async function getProducts(locale: Locale, query: ProductQuery = {}): Pro
     }
 
     const { data, error } = await productsQuery.limit(MAX_ROWS);
-    if (reportError("products", error)) return emptyPage(page);
+    if (reportError("products", error)) return emptyPage();
     const items = await hydrateProducts(locale, Array.isArray(data) ? data : [], client);
-    if (!items) return emptyPage(page);
+    if (!items) return emptyPage();
 
     const sorted = sortItems(items, sort, locale);
     const total = sorted.length;
-    const start = (page - 1) * pageSize;
+    const pageCount = Math.ceil(total / pageSize);
+    const effectivePage = Math.min(page, Math.max(1, pageCount));
+    const start = (effectivePage - 1) * pageSize;
     return {
       items: sorted.slice(start, start + pageSize).map((item) => item.product),
       total,
-      page,
-      pageCount: Math.ceil(total / pageSize),
+      page: effectivePage,
+      pageCount,
     };
   });
 }

@@ -346,6 +346,53 @@ describe("getProducts", () => {
     expect(page.pageCount).toBe(2);
   });
 
+  it("clamps an out-of-range page to the last page and returns that page's items", async () => {
+    setup({
+      products: [
+        {
+          data: [
+            ...productRows,
+            { ...productRows[1], id: "p3", slug: "tee-blanc", sort_order: 3 },
+            { ...productRows[1], id: "p4", slug: "tee-bleu", sort_order: 4 },
+            { ...productRows[1], id: "p5", slug: "tee-vert", sort_order: 5 },
+          ],
+          error: null,
+        },
+      ],
+    });
+
+    const page = await getProducts("fr", { page: 999, pageSize: 2 });
+
+    expect(page.total).toBe(5);
+    expect(page.pageCount).toBe(3);
+    expect(page.page).toBe(3);
+    expect(page.items.map((item) => item.id)).toEqual(["p5"]);
+  });
+
+  it("clamps the page to 1 when the catalogue has no results", async () => {
+    setup({ products: [{ data: [], error: null }] });
+
+    await expect(getProducts("fr", { page: 999 })).resolves.toEqual({
+      items: [],
+      total: 0,
+      page: 1,
+      pageCount: 0,
+    });
+  });
+
+  it("returns page 1 on a Supabase error even when an out-of-range page was requested", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    setup({ products: [{ data: null, error: { message: "db offline" } }] });
+
+    await expect(getProducts("fr", { page: 999 })).resolves.toEqual({
+      items: [],
+      total: 0,
+      page: 1,
+      pageCount: 0,
+    });
+    expect(log).toHaveBeenCalledWith(expect.stringContaining("db offline"));
+  });
+
   it("uses sort_order for featured, created_at for newest and name tie-breaks", async () => {
     const featuredDb = setup();
     const featured = await getFeaturedProducts("en", 3);
