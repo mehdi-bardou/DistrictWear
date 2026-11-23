@@ -90,7 +90,7 @@ export default async function HomePage({ params }: HomePageProps) {
               <li key={category.id}>
                 <Link
                   href={`/shop?category=${encodeURIComponent(category.slug)}`}
-                  className="border-ink-900/20 text-ink-900 hover:border-forest-900 hover:bg-forest-900 hover:text-cream-100 inline-flex items-center border px-5 py-3 text-xs font-bold tracking-[0.16em] uppercase transition-colors"
+                  className="border-ink-900/20 text-ink-900 hover:border-forest-900 hover:bg-forest-900 hover:text-cream-100 inline-flex items-center border px-5 py-3 text-xs font-bold tracking-[0.16em] uppercase transition-opacity hover:opacity-85"
                 >
                   {category.name}
                 </Link>
