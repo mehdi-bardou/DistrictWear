@@ -33,6 +33,12 @@
     "outOfStock": "نفد المخزون",
     "currency": "MAD"
   },
+  "whatsapp": {
+    "greeting": "مرحباً DISTRICT WEAR، أود تقديم طلب:",
+    "closing": "شكراً جزيلاً على ردكم!",
+    "reference": "المرجع",
+    "total": "الإجمالي"
+  },
   "home": {
     "eyebrow": "المجموعة ٠١ — خريف/شتاء",
     "title": "زيّ الحي",

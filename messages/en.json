@@ -33,6 +33,12 @@
     "outOfStock": "Out of stock",
     "currency": "MAD"
   },
+  "whatsapp": {
+    "greeting": "Hello DISTRICT WEAR, I would like to place an order:",
+    "closing": "Thanks in advance for your reply!",
+    "reference": "Reference",
+    "total": "Total"
+  },
   "home": {
     "eyebrow": "Collection 01 — Fall/Winter",
     "title": "DRESS THE DISTRICT",

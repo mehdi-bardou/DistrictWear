@@ -33,6 +33,12 @@
     "outOfStock": "Épuisé",
     "currency": "MAD"
   },
+  "whatsapp": {
+    "greeting": "Bonjour DISTRICT WEAR, je souhaite passer une commande :",
+    "closing": "Merci par avance pour votre retour !",
+    "reference": "Référence",
+    "total": "Total"
+  },
   "home": {
     "eyebrow": "Collection 01 — Automne/Hiver",
     "title": "HABILLER LE QUARTIER",
