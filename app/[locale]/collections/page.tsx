@@ -41,10 +41,7 @@ export default async function CollectionsPage({ params }: CollectionsPageProps) 
         <ul className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 md:mt-20 lg:grid-cols-3 lg:gap-8">
           {collections.map((collection) => (
             <li key={collection.id}>
-              <Link
-                href={`/collections/${collection.slug}`}
-                className="group block focus-visible:outline-none"
-              >
+              <Link href={`/collections/${collection.slug}`} className="group block">
                 <article className="flex h-full flex-col">
                   <div className="bg-cream-200 relative aspect-[4/3] w-full overflow-hidden">
                     {collection.image ? (

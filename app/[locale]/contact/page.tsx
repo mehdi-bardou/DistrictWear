@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { validContactEmail } from "@/lib/storefront/contact";
 import { getStoreSettings } from "@/lib/storefront/settings";
 import type { Locale } from "@/lib/storefront/types";
 
@@ -25,6 +26,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
 
   const digits = settings.whatsappNumber.replace(/\D/g, "");
   const whatsapp = PHONE_PATTERN.test(digits) ? digits : "";
+  const email = validContactEmail(settings.contactEmail);
   const instagramUrl = (() => {
     const value = settings.instagramUrl;
     if (!value) return null;
@@ -35,7 +37,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
       return null;
     }
   })();
-  const hasChannels = Boolean(settings.contactEmail || instagramUrl || whatsapp);
+  const hasChannels = Boolean(email || instagramUrl || whatsapp);
 
   return (
     <section className="shell pt-16 pb-20 md:pt-24 xl:pb-28">
@@ -53,17 +55,17 @@ export default async function ContactPage({ params }: ContactPageProps) {
         <div className="lg:col-span-7">
           {hasChannels ? (
             <dl className="flex flex-col">
-              {settings.contactEmail && (
+              {email && (
                 <div className="border-ink-900/20 flex flex-col gap-2 border-b py-6 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
                   <dt className="text-ink-500 text-xs font-bold tracking-[0.2em] uppercase">
                     {t("emailLabel")}
                   </dt>
                   <dd className="text-ink-900 text-base break-words">
                     <a
-                      href={`mailto:${settings.contactEmail}`}
+                      href={`mailto:${email}`}
                       className="inline-flex items-center gap-2 transition-opacity hover:opacity-70"
                     >
-                      {settings.contactEmail}
+                      {email}
                       <ArrowUpRight size={14} aria-hidden="true" />
                     </a>
                   </dd>
