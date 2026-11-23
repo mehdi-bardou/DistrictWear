@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Reveal } from "@/components/motion/reveal";
 import { Link } from "@/i18n/navigation";
 import { getPublishedCollections } from "@/lib/storefront/collections";
 import type { Locale } from "@/lib/storefront/types";
@@ -26,13 +27,15 @@ export default async function CollectionsPage({ params }: CollectionsPageProps) 
 
   return (
     <section className="shell pt-12 pb-20 md:pt-16 xl:pb-28">
-      <p className="text-forest-700 mb-6 text-xs font-bold tracking-[0.28em] uppercase">
-        DISTRICT WEAR
-      </p>
-      <h1 className="display-xl text-forest-900">{t("title")}</h1>
-      <p className="text-ink-700 mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
-        {t("intro")}
-      </p>
+      <Reveal>
+        <p className="text-forest-700 mb-6 text-xs font-bold tracking-[0.28em] uppercase">
+          DISTRICT WEAR
+        </p>
+        <h1 className="display-xl text-forest-900">{t("title")}</h1>
+        <p className="text-ink-700 mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
+          {t("intro")}
+        </p>
+      </Reveal>
 
       {collections.length > 0 ? (
         <ul className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 md:mt-20 lg:grid-cols-3 lg:gap-8">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Reveal } from "@/components/motion/reveal";
 import { ProductCard } from "@/components/storefront/product-card";
 import { Link } from "@/i18n/navigation";
 import { getProducts } from "@/lib/storefront/catalog";
@@ -64,12 +65,14 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       </nav>
 
       <section className="mt-10">
-        <h1 className="display-xl text-forest-900">{collection.name}</h1>
-        {collection.description && (
-          <p className="text-ink-700 mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
-            {collection.description}
-          </p>
-        )}
+        <Reveal>
+          <h1 className="display-xl text-forest-900">{collection.name}</h1>
+          {collection.description && (
+            <p className="text-ink-700 mt-6 max-w-2xl text-base leading-relaxed md:text-lg">
+              {collection.description}
+            </p>
+          )}
+        </Reveal>
       </section>
 
       <section aria-labelledby="collection-products-heading" className="mt-16 md:mt-24">

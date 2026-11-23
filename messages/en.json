@@ -152,5 +152,12 @@
     "hoursValue": "Monday — Saturday, 10:00 to 19:00 (Casablanca)",
     "note": "Orders are finalised in chat with our team. No payment is taken online.",
     "empty": "No contact channels have been published yet. Please check back soon."
+  },
+  "notFound": {
+    "label": "Error 404",
+    "title": "This page left the district",
+    "copy": "The link is broken or the page no longer exists. Head back home or explore the shop.",
+    "home": "Back to home",
+    "shop": "Explore the shop"
   }
 }

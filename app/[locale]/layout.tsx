@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { SiteFooter } from "@/components/layout/footer";
 import { SiteHeader } from "@/components/layout/navbar";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { PageTransition } from "@/components/motion/page-transition";
 import "../globals.css";
 
 const display = Barlow_Condensed({
@@ -74,7 +75,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           <SmoothScroll />
           <SiteHeader />
           <main id="main-content" className="min-h-[60dvh]">
-            {children}
+            <PageTransition>{children}</PageTransition>
           </main>
           <SiteFooter />
         </NextIntlClientProvider>

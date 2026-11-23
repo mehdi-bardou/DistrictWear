@@ -152,5 +152,12 @@
     "hoursValue": "Lundi — samedi, 10h à 19h (Casablanca)",
     "note": "Les commandes sont finalisées par chat avec notre équipe. Aucun paiement n'est effectué en ligne.",
     "empty": "Aucun moyen de contact n'est encore publié. Revenez bientôt."
+  },
+  "notFound": {
+    "label": "Erreur 404",
+    "title": "Cette page a quitté le quartier",
+    "copy": "Le lien est rompu ou la page n'existe plus. Reprenez depuis l'accueil ou explorez la boutique.",
+    "home": "Retour à l'accueil",
+    "shop": "Explorer la boutique"
   }
 }

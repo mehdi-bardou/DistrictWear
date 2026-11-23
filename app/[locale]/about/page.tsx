@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Reveal } from "@/components/motion/reveal";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/lib/storefront/types";
 
@@ -38,8 +39,10 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
           <div className="rule my-10 md:my-14" />
 
-          <h2 className="display-lg text-forest-900">{t("cityTitle")}</h2>
-          <p className="text-ink-700 mt-6 text-base leading-relaxed">{t("cityCopy")}</p>
+          <Reveal>
+            <h2 className="display-lg text-forest-900">{t("cityTitle")}</h2>
+            <p className="text-ink-700 mt-6 text-base leading-relaxed">{t("cityCopy")}</p>
+          </Reveal>
 
           <Link
             href="/shop"
@@ -51,27 +54,33 @@ export default async function AboutPage({ params }: AboutPageProps) {
         </div>
 
         <div className="lg:col-span-7">
-          <h2 className="display-lg text-forest-900">{t("manifestoTitle")}</h2>
-          <p className="text-ink-700 mt-6 text-base leading-relaxed md:text-lg">{t("manifesto")}</p>
+          <Reveal>
+            <h2 className="display-lg text-forest-900">{t("manifestoTitle")}</h2>
+            <p className="text-ink-700 mt-6 text-base leading-relaxed md:text-lg">
+              {t("manifesto")}
+            </p>
+          </Reveal>
 
           <div className="rule my-10 md:my-14" />
 
-          <h2 className="display-lg text-forest-900">{t("principlesTitle")}</h2>
-          <ol className="mt-8">
-            {principles.map((principle) => (
-              <li
-                key={principle.title}
-                className="border-ink-900/20 grid gap-2 border-t py-6 sm:grid-cols-12 sm:gap-6"
-              >
-                <h3 className="text-forest-900 text-sm font-bold tracking-[0.12em] uppercase sm:col-span-4">
-                  {principle.title}
-                </h3>
-                <p className="text-ink-700 text-sm leading-relaxed sm:col-span-8">
-                  {principle.copy}
-                </p>
-              </li>
-            ))}
-          </ol>
+          <Reveal>
+            <h2 className="display-lg text-forest-900">{t("principlesTitle")}</h2>
+            <ol className="mt-8">
+              {principles.map((principle) => (
+                <li
+                  key={principle.title}
+                  className="border-ink-900/20 grid gap-2 border-t py-6 sm:grid-cols-12 sm:gap-6"
+                >
+                  <h3 className="text-forest-900 text-sm font-bold tracking-[0.12em] uppercase sm:col-span-4">
+                    {principle.title}
+                  </h3>
+                  <p className="text-ink-700 text-sm leading-relaxed sm:col-span-8">
+                    {principle.copy}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
       </div>
     </section>
