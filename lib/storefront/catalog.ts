@@ -6,7 +6,7 @@ import type {
   ProductImage as ProductImageRow,
   ProductVariant,
 } from "../supabase/database.types";
-import { createClient } from "../supabase/server";
+import { createPublicClient } from "../supabase/public";
 import { sanitizeSearch } from "./filters";
 import { productImageAlt, productImageUrl } from "./images";
 import type {
@@ -21,7 +21,7 @@ import type {
   StorefrontVariant,
 } from "./types";
 
-type Client = Awaited<ReturnType<typeof createClient>>;
+type Client = Awaited<ReturnType<typeof createPublicClient>>;
 type PriceInfo = { min: number | null; max: number | null; hasStock: boolean };
 type CatalogItem = {
   product: StorefrontProduct;
@@ -49,7 +49,7 @@ function reportError(context: string, error: { message: string } | null): boolea
 
 async function withClient<T>(fallback: T, work: (client: Client) => Promise<T>): Promise<T> {
   try {
-    const client = await createClient();
+    const client = await createPublicClient();
     return await work(client);
   } catch (error) {
     console.error("[storefront] Supabase client error", error);

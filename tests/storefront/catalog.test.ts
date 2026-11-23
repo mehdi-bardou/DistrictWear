@@ -1,9 +1,13 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const mocks = vi.hoisted(() => ({ createClient: vi.fn() }));
+const mocks = vi.hoisted(() => ({ createPublicClient: vi.fn() }));
 
 vi.mock("server-only", () => ({}));
-vi.mock("../../lib/supabase/server", () => ({ createClient: mocks.createClient }));
+vi.mock("../../lib/supabase/public", () => ({
+  createPublicClient: mocks.createPublicClient,
+}));
 
 import {
   getActiveCategories,
@@ -253,7 +257,7 @@ function setup(overrides: Partial<Record<string, QueryResult[]>> = {}): Db {
     if (results) responses[table] = results;
   }
   const db = fakeDb(responses);
-  mocks.createClient.mockResolvedValue(db);
+  mocks.createPublicClient.mockResolvedValue(db);
   return db;
 }
 
@@ -625,5 +629,21 @@ describe("getPublishedProductSlugs", () => {
 
     await expect(getPublishedProductSlugs()).resolves.toEqual([]);
     expect(log).toHaveBeenCalledWith(expect.stringContaining("db offline"));
+  });
+});
+
+describe("storefront client boundary", () => {
+  it("uses the prerender-safe public client, not next/headers or the cookie-based server client", () => {
+    const source = readFileSync(
+      path.join(process.cwd(), "lib", "storefront", "catalog.ts"),
+      "utf8",
+    );
+
+    expect(source).toContain('from "../supabase/public"');
+    expect(source).toContain("createPublicClient");
+    expect(source).not.toContain("next/headers");
+    expect(source).not.toContain("../supabase/server");
+    expect(source).not.toContain("@/lib/supabase/server");
+    expect(source).not.toContain("await createClient(");
   });
 });
