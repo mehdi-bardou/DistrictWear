@@ -48,7 +48,10 @@ export async function SiteHeader() {
         <div className="flex items-center gap-3 md:gap-5">
           <LanguageSwitcher />
           <span className="bg-ink-900/20 hidden h-5 w-px sm:block" aria-hidden="true" />
-          <CartButton whatsappNumber={settings.whatsappNumber} />
+          <CartButton
+            whatsappNumber={settings.whatsappNumber}
+            inquiryLoggingEnabled={settings.inquiryLoggingEnabled}
+          />
         </div>
       </div>
     </header>

@@ -16,6 +16,7 @@ import {
   createReference,
   whatsappUrl,
   type WhatsAppCopy,
+  type WhatsAppLine,
 } from "@/lib/whatsapp/message";
 
 type CartPanelProps = {
@@ -23,6 +24,7 @@ type CartPanelProps = {
   currency: string;
   whatsappNumber: string;
   whatsappCopy: WhatsAppCopy;
+  inquiryLoggingEnabled: boolean;
   mode?: "drawer" | "page";
   onNavigate?: () => void;
 };
@@ -30,12 +32,24 @@ type CartPanelProps = {
 type FreshResult =
   { key: string; status: "fresh"; fresh: FreshVariant[] } | { key: string; status: "error" };
 
+/** One mapping for both the WhatsApp message and its optional inquiry log. */
+function toInquiryItems(lines: ReconciledLine[]): WhatsAppLine[] {
+  return lines.map((line) => ({
+    nameFr: line.nameFr,
+    color: line.color,
+    size: line.size,
+    quantity: line.quantity,
+    price: line.price,
+  }));
+}
+
 /** Shared cart list for the header drawer and the full cart page. */
 export function CartPanel({
   locale,
   currency,
   whatsappNumber,
   whatsappCopy,
+  inquiryLoggingEnabled,
   mode = "drawer",
   onNavigate,
 }: CartPanelProps) {
@@ -97,21 +111,20 @@ export function CartPanel({
     };
   }, [currentKey, hydrated, lines, result]);
 
-  let checkoutUrl: string | null = null;
+  // One object for both the link and the optional log, so the reference cannot diverge.
+  // React Compiler memoizes this derivation; a manual useMemo on `reconciled` is rejected by
+  // react-hooks/preserve-manual-memoization because the derived array is treated as mutable.
+  let checkout: { reference: string; message: string; url: string } | null = null;
   if (canOrder && reconciled.length <= 20) {
+    const reference = createReference();
     const message = buildWhatsAppMessage({
-      lines: reconciled.map((line) => ({
-        nameFr: line.nameFr,
-        color: line.color,
-        size: line.size,
-        quantity: line.quantity,
-        price: line.price,
-      })),
+      lines: toInquiryItems(reconciled),
       locale,
-      reference: createReference(),
+      reference,
       copy: whatsappCopy,
     });
-    checkoutUrl = whatsappUrl(whatsappNumber, message);
+    const url = whatsappUrl(whatsappNumber, message);
+    if (url) checkout = { reference, message, url };
   }
 
   function updateLine(line: ReconciledLine) {
@@ -290,17 +303,36 @@ export function CartPanel({
         <p className="text-ink-500 mt-2 text-xs">{t("itemCount", { count })}</p>
 
         <a
-          href={checkoutUrl ?? undefined}
-          target={checkoutUrl ? "_blank" : undefined}
-          rel={checkoutUrl ? "noopener noreferrer" : undefined}
-          aria-disabled={!checkoutUrl}
+          href={checkout?.url}
+          target={checkout ? "_blank" : undefined}
+          rel={checkout ? "noopener noreferrer" : undefined}
+          aria-disabled={!checkout}
           onClick={(event) => {
-            if (!checkoutUrl) event.preventDefault();
-            else onNavigate?.();
+            if (!checkout) {
+              event.preventDefault();
+              return;
+            }
+
+            onNavigate?.();
+            if (inquiryLoggingEnabled) {
+              void fetch("/api/inquiries", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                  reference: checkout.reference,
+                  locale,
+                  message: checkout.message,
+                  items: toInquiryItems(reconciled),
+                  total: subtotal,
+                }),
+              }).catch((error: unknown) => {
+                console.error("[cart] inquiry logging failed", error);
+              });
+            }
           }}
           className={cn(
             "bg-forest-900 text-cream-100 mt-6 flex items-center justify-center px-6 py-4 text-xs font-bold tracking-[0.16em] uppercase transition-opacity hover:opacity-85",
-            !checkoutUrl && "pointer-events-none opacity-50",
+            !checkout && "pointer-events-none opacity-50",
           )}
         >
           {t("checkout")}

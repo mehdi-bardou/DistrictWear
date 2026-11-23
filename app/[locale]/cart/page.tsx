@@ -40,6 +40,7 @@ export default async function CartPage({ params }: CartPageProps) {
           currency={commonT("currency")}
           whatsappNumber={settings.whatsappNumber}
           whatsappCopy={whatsappCopy}
+          inquiryLoggingEnabled={settings.inquiryLoggingEnabled}
           mode="page"
         />
       </div>

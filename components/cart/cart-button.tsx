@@ -12,10 +12,11 @@ import { CartPanel } from "./cart-panel";
 
 type CartButtonProps = {
   whatsappNumber: string;
+  inquiryLoggingEnabled: boolean;
 };
 
 /** Header trigger with a Radix drawer; the store is rehydrated only in the browser. */
-export function CartButton({ whatsappNumber }: CartButtonProps) {
+export function CartButton({ whatsappNumber, inquiryLoggingEnabled }: CartButtonProps) {
   const navT = useTranslations("nav");
   const t = useTranslations("cart");
   const commonT = useTranslations("common");
@@ -91,6 +92,7 @@ export function CartButton({ whatsappNumber }: CartButtonProps) {
               currency={commonT("currency")}
               whatsappNumber={whatsappNumber}
               whatsappCopy={whatsappCopy}
+              inquiryLoggingEnabled={inquiryLoggingEnabled}
               mode="drawer"
               onNavigate={() => setOpen(false)}
             />
