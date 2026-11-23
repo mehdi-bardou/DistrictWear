@@ -39,6 +39,11 @@
     "lede": "Clean cuts, fabrics that hold up. Streetwear from Casablanca, without the noise.",
     "cta": "Explore the shop",
     "secondary": "View collections",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "featuredTitle": "Selected pieces",
+    "featuredCopy": "A few pieces picked to represent the district, ready to get you started.",
+    "featuredEmpty": "No featured pieces right now. Check back soon.",
+    "categoriesTitle": "Shop by category",
+    "categoriesCopy": "Find the pieces that fit your style, one category at a time."
   }
 }

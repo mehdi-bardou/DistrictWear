@@ -39,6 +39,11 @@
     "lede": "Des coupes nettes, des matières qui tiennent. Le streetwear de Casablanca, sans bruit.",
     "cta": "Découvrir la boutique",
     "secondary": "Voir les collections",
-    "scroll": "Défiler"
+    "scroll": "Défiler",
+    "featuredTitle": "Notre sélection",
+    "featuredCopy": "Quelques pièces choisies pour représenter le quartier.",
+    "featuredEmpty": "Aucune pièce à la une pour le moment. Revenez bientôt.",
+    "categoriesTitle": "Découvrir par catégorie",
+    "categoriesCopy": "Trouvez rapidement la pièce qui vous ressemble."
   }
 }
