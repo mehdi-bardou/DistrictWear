@@ -66,5 +66,21 @@
     "emptyReset": "مسح عوامل التصفية",
     "previous": "السابق",
     "next": "التالي"
+  },
+  "product": {
+    "breadcrumbHome": "الرئيسية",
+    "breadcrumbShop": "المتجر",
+    "galleryLabel": "معرض صور المنتج",
+    "thumbnail": "عرض الصورة",
+    "colorLabel": "اللون",
+    "sizeLabel": "المقاس",
+    "unavailable": "هذا المنتج غير متوفر حالياً.",
+    "outOfStock": "نفد المخزون",
+    "inStock": "متوفر",
+    "selectColor": "اختر اللون",
+    "selectSize": "اختر المقاس",
+    "relatedTitle": "قد يعجبك أيضاً",
+    "relatedCopy": "قطع أخرى من الحي تستحق الاكتشاف.",
+    "priceLabel": "السعر"
   }
 }

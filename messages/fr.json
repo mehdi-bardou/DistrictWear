@@ -66,5 +66,21 @@
     "emptyReset": "Effacer les filtres",
     "previous": "Précédent",
     "next": "Suivant"
+  },
+  "product": {
+    "breadcrumbHome": "Accueil",
+    "breadcrumbShop": "Boutique",
+    "galleryLabel": "Galerie du produit",
+    "thumbnail": "Voir l'image",
+    "colorLabel": "Couleur",
+    "sizeLabel": "Taille",
+    "unavailable": "Ce produit n'est pas disponible.",
+    "outOfStock": "Épuisé",
+    "inStock": "En stock",
+    "selectColor": "Choisir une couleur",
+    "selectSize": "Choisir une taille",
+    "relatedTitle": "Vous aimerez aussi",
+    "relatedCopy": "D'autres pièces du quartier à découvrir.",
+    "priceLabel": "Prix"
   }
 }

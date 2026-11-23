@@ -66,5 +66,21 @@
     "emptyReset": "Clear filters",
     "previous": "Previous",
     "next": "Next"
+  },
+  "product": {
+    "breadcrumbHome": "Home",
+    "breadcrumbShop": "Shop",
+    "galleryLabel": "Product gallery",
+    "thumbnail": "View image",
+    "colorLabel": "Color",
+    "sizeLabel": "Size",
+    "unavailable": "This product is unavailable.",
+    "outOfStock": "Out of stock",
+    "inStock": "In stock",
+    "selectColor": "Select a color",
+    "selectSize": "Select a size",
+    "relatedTitle": "You may also like",
+    "relatedCopy": "More pieces from the district to discover.",
+    "priceLabel": "Price"
   }
 }
