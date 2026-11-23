@@ -3,6 +3,32 @@
     "title": "DISTRICT WEAR — Streetwear premium à Casablanca",
     "description": "Des pièces de streetwear pensées pour la rue. Découvrez la collection DISTRICT WEAR."
   },
+  "seo": {
+    "home": {
+      "title": "Streetwear premium à Casablanca",
+      "description": "DISTRICT WEAR — des pièces de streetwear pensées pour la rue, façonnées à Casablanca. Découvrez la collection."
+    },
+    "shop": {
+      "title": "Boutique",
+      "description": "Parcourez toutes les pièces DISTRICT WEAR : coupes nettes, matières durables et streetwear pensé pour le quartier."
+    },
+    "cart": {
+      "title": "Votre panier",
+      "description": "Consultez votre panier DISTRICT WEAR et finalisez votre commande directement sur WhatsApp."
+    },
+    "collections": {
+      "title": "Collections",
+      "description": "Découvrez les collections DISTRICT WEAR : des séries pensées autour d'une seule idée, à Casablanca."
+    },
+    "about": {
+      "title": "À propos",
+      "description": "L'histoire de DISTRICT WEAR : un streetwear de Casablanca, fait pour le quartier et pensé pour durer."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contactez DISTRICT WEAR pour une question sur une taille, une pièce ou une commande. Réponse sur WhatsApp."
+    }
+  },
   "nav": {
     "home": "Accueil",
     "shop": "Boutique",

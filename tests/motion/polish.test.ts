@@ -33,6 +33,7 @@ const existingNamespaces = [
   "meta",
   "nav",
   "product",
+  "seo",
   "shop",
   "whatsapp",
 ];
@@ -53,7 +54,7 @@ describe("notFound translations", () => {
     }
   });
 
-  it("adds only the notFound namespace", () => {
+  it("adds the expected namespaces to every locale", () => {
     for (const { messages } of locales) {
       expect(Object.keys(messages).sort()).toEqual([...existingNamespaces, "notFound"].sort());
     }

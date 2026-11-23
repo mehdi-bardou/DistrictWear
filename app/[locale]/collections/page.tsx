@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Reveal } from "@/components/motion/reveal";
 import { Link } from "@/i18n/navigation";
+import { pageMetadata } from "@/lib/seo/metadata";
 import { getPublishedCollections } from "@/lib/storefront/collections";
 import type { Locale } from "@/lib/storefront/types";
 
@@ -12,6 +14,18 @@ type CollectionsPageProps = { params: Promise<{ locale: string }> };
 
 function toLocale(value: string): Locale {
   return value === "ar" || value === "en" ? value : "fr";
+}
+
+export async function generateMetadata({ params }: CollectionsPageProps): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const seo = await getTranslations({ locale, namespace: "seo" });
+  return pageMetadata({
+    locale,
+    pathname: "/collections",
+    title: seo("collections.title"),
+    description: seo("collections.description"),
+  });
 }
 
 export default async function CollectionsPage({ params }: CollectionsPageProps) {

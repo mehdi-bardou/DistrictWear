@@ -8,6 +8,11 @@ import { SiteFooter } from "@/components/layout/footer";
 import { SiteHeader } from "@/components/layout/navbar";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { PageTransition } from "@/components/motion/page-transition";
+import { JsonLd } from "@/components/seo/json-ld";
+import { pageMetadata, siteUrl } from "@/lib/seo/metadata";
+import { organizationJsonLd } from "@/lib/seo/structured-data";
+import { getStoreSettings } from "@/lib/storefront/settings";
+import type { Locale } from "@/lib/storefront/types";
 import "../globals.css";
 
 const display = Barlow_Condensed({
@@ -40,12 +45,14 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: LocaleLayoutProps): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale: rawLocale } = await params;
+  const locale: Locale = hasLocale(routing.locales, rawLocale) ? rawLocale : routing.defaultLocale;
   const t = await getTranslations({ locale, namespace: "meta" });
 
   return {
+    ...pageMetadata({ locale, pathname: "/", title: t("title"), description: t("description") }),
+    metadataBase: new URL(siteUrl()),
     title: { default: t("title"), template: "%s — DISTRICT WEAR" },
-    description: t("description"),
     applicationName: "DISTRICT WEAR",
   };
 }
@@ -55,8 +62,11 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   if (!hasLocale(routing.locales, locale)) notFound();
 
   setRequestLocale(locale);
-  const messages = await getMessages();
-  const t = await getTranslations({ locale, namespace: "common" });
+  const [messages, t, settings] = await Promise.all([
+    getMessages(),
+    getTranslations({ locale, namespace: "common" }),
+    getStoreSettings(),
+  ]);
 
   return (
     <html
@@ -65,6 +75,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       className={`${display.variable} ${sans.variable} ${arabic.variable}`}
     >
       <body className="bg-cream-100 text-ink-900 min-h-dvh antialiased">
+        <JsonLd data={organizationJsonLd(settings.instagramUrl)} />
         <NextIntlClientProvider messages={messages}>
           <a
             href="#main-content"

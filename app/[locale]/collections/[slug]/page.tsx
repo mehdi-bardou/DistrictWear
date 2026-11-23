@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/reveal";
 import { ProductCard } from "@/components/storefront/product-card";
 import { Link } from "@/i18n/navigation";
+import { pageMetadata } from "@/lib/seo/metadata";
 import { getProducts } from "@/lib/storefront/catalog";
 import { getCollectionBySlug, getPublishedCollectionSlugs } from "@/lib/storefront/collections";
 import type { Locale } from "@/lib/storefront/types";
@@ -27,16 +28,20 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   const locale = toLocale(rawLocale);
   setRequestLocale(locale);
   const collection = await getCollectionBySlug(slug, locale);
+  const seo = await getTranslations({ locale, namespace: "seo" });
 
   if (!collection) {
     const meta = await getTranslations({ locale, namespace: "meta" });
-    return { title: { absolute: meta("title") } };
+    return { title: { absolute: meta("title") }, description: meta("description") };
   }
 
-  return {
-    title: collection.name,
-    description: collection.description ?? undefined,
-  };
+  // A published collection can have blank localized copy: never emit empty SEO fields.
+  return pageMetadata({
+    locale,
+    pathname: `/collections/${collection.slug}`,
+    title: collection.name.trim() || seo("collections.title"),
+    description: collection.description?.trim() || seo("collections.description"),
+  });
 }
 
 export default async function CollectionPage({ params }: CollectionPageProps) {

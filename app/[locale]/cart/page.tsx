@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CartPanel } from "@/components/cart/cart-panel";
+import { pageMetadata } from "@/lib/seo/metadata";
 import { getStoreSettings } from "@/lib/storefront/settings";
 import type { Locale } from "@/lib/storefront/types";
 import type { WhatsAppCopy } from "@/lib/whatsapp/message";
@@ -9,6 +11,18 @@ export const revalidate = 300;
 type CartPageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({ params }: CartPageProps): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale: Locale = rawLocale === "ar" || rawLocale === "en" ? rawLocale : "fr";
+  const seo = await getTranslations({ locale, namespace: "seo" });
+  return pageMetadata({
+    locale,
+    pathname: "/cart",
+    title: seo("cart.title"),
+    description: seo("cart.description"),
+  });
+}
 
 export default async function CartPage({ params }: CartPageProps) {
   const { locale: rawLocale } = await params;

@@ -1,5 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo/metadata";
 import { validContactEmail } from "@/lib/storefront/contact";
 import { getStoreSettings } from "@/lib/storefront/settings";
 import type { Locale } from "@/lib/storefront/types";
@@ -12,6 +14,18 @@ type ContactPageProps = { params: Promise<{ locale: string }> };
 
 function toLocale(value: string): Locale {
   return value === "ar" || value === "en" ? value : "fr";
+}
+
+export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const seo = await getTranslations({ locale, namespace: "seo" });
+  return pageMetadata({
+    locale,
+    pathname: "/contact",
+    title: seo("contact.title"),
+    description: seo("contact.description"),
+  });
 }
 
 export default async function ContactPage({ params }: ContactPageProps) {

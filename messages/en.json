@@ -3,6 +3,32 @@
     "title": "DISTRICT WEAR — Premium streetwear from Casablanca",
     "description": "Streetwear built for the streets. Discover the DISTRICT WEAR collection."
   },
+  "seo": {
+    "home": {
+      "title": "Premium streetwear from Casablanca",
+      "description": "DISTRICT WEAR — streetwear built for the streets, made in Casablanca. Discover the collection."
+    },
+    "shop": {
+      "title": "Shop",
+      "description": "Browse every DISTRICT WEAR piece: clean cuts, fabrics that hold up and streetwear built for the district."
+    },
+    "cart": {
+      "title": "Your cart",
+      "description": "Review your DISTRICT WEAR cart and complete your order directly on WhatsApp."
+    },
+    "collections": {
+      "title": "Collections",
+      "description": "Explore DISTRICT WEAR collections: considered drops built around a single idea, from Casablanca."
+    },
+    "about": {
+      "title": "About",
+      "description": "The story of DISTRICT WEAR: streetwear from Casablanca, made for the district and built to last."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contact DISTRICT WEAR about sizing, a piece or an order. We reply on WhatsApp."
+    }
+  },
   "nav": {
     "home": "Home",
     "shop": "Shop",
