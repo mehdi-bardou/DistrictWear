@@ -45,5 +45,26 @@
     "featuredEmpty": "لا توجد قطع مميزة في الوقت الحالي. تفضل بزيارتنا قريباً.",
     "categoriesTitle": "تسوّق حسب الفئة",
     "categoriesCopy": "اختر الفئة التي تناسب أسلوبك واكتشف ما فيها."
+  },
+  "shop": {
+    "title": "تسوّق المجموعة",
+    "subtitle": "كل قطعنا المصممة للحي. صفِّ وابحث واعثر على قطعتك القادمة.",
+    "all": "الكل",
+    "categoryLabel": "تصفية حسب الفئة",
+    "sortLabel": "ترتيب المنتجات",
+    "sortFeatured": "المميزة",
+    "sortNewest": "الأحدث",
+    "sortName": "الاسم",
+    "sortPriceAsc": "السعر: من الأقل إلى الأعلى",
+    "sortPriceDesc": "السعر: من الأعلى إلى الأقل",
+    "searchLabel": "ابحث عن منتج",
+    "searchPlaceholder": "ابحث في المجموعة",
+    "searchSubmit": "بحث",
+    "results": "{count} منتجات",
+    "resultsOne": "{count} منتج",
+    "empty": "لا توجد منتجات مطابقة لخياراتك.",
+    "emptyReset": "مسح عوامل التصفية",
+    "previous": "السابق",
+    "next": "التالي"
   }
 }

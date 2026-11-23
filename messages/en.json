@@ -45,5 +45,26 @@
     "featuredEmpty": "No featured pieces right now. Check back soon.",
     "categoriesTitle": "Shop by category",
     "categoriesCopy": "Find the pieces that fit your style, one category at a time."
+  },
+  "shop": {
+    "title": "Shop the collection",
+    "subtitle": "Every piece, built for the district. Filter, search and find your next staple.",
+    "all": "All",
+    "categoryLabel": "Filter by category",
+    "sortLabel": "Sort products",
+    "sortFeatured": "Featured",
+    "sortNewest": "Newest",
+    "sortName": "Name",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "searchLabel": "Search products",
+    "searchPlaceholder": "Search the collection",
+    "searchSubmit": "Search",
+    "results": "{count} products",
+    "resultsOne": "{count} product",
+    "empty": "No products match your filters.",
+    "emptyReset": "Clear filters",
+    "previous": "Previous",
+    "next": "Next"
   }
 }

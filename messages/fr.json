@@ -45,5 +45,26 @@
     "featuredEmpty": "Aucune pièce à la une pour le moment. Revenez bientôt.",
     "categoriesTitle": "Découvrir par catégorie",
     "categoriesCopy": "Trouvez rapidement la pièce qui vous ressemble."
+  },
+  "shop": {
+    "title": "Découvrir la boutique",
+    "subtitle": "Toutes nos pièces, pensées pour le quartier. Filtrez, cherchez et trouvez votre prochain essentiel.",
+    "all": "Tout",
+    "categoryLabel": "Filtrer par catégorie",
+    "sortLabel": "Trier les produits",
+    "sortFeatured": "À la une",
+    "sortNewest": "Nouveautés",
+    "sortName": "Nom",
+    "sortPriceAsc": "Prix croissant",
+    "sortPriceDesc": "Prix décroissant",
+    "searchLabel": "Rechercher un produit",
+    "searchPlaceholder": "Rechercher dans la collection",
+    "searchSubmit": "Rechercher",
+    "results": "{count} produits",
+    "resultsOne": "{count} produit",
+    "empty": "Aucun produit ne correspond à vos filtres.",
+    "emptyReset": "Effacer les filtres",
+    "previous": "Précédent",
+    "next": "Suivant"
   }
 }
