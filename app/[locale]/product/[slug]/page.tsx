@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { ProductPurchase } from "@/components/cart/product-purchase";
 import { ProductCard } from "@/components/storefront/product-card";
 import { ProductGallery } from "@/components/storefront/product-gallery";
-import { VariantPicker } from "@/components/storefront/variant-picker";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Link } from "@/i18n/navigation";
+import { localizedPath, pageMetadata, siteUrl } from "@/lib/seo/metadata";
+import { productJsonLd } from "@/lib/seo/structured-data";
 import {
   getProductBySlug,
   getPublishedProductSlugs,
@@ -33,16 +36,19 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const locale = toLocale(rawLocale);
   setRequestLocale(locale);
   const product = await getProductBySlug(slug, locale);
+  const seo = await getTranslations({ locale, namespace: "seo" });
 
   if (!product) {
     const meta = await getTranslations({ locale, namespace: "meta" });
-    return { title: { absolute: meta("title") } };
+    return { title: { absolute: meta("title") }, description: meta("description") };
   }
 
-  return {
-    title: product.name,
-    description: product.description ?? undefined,
-  };
+  return pageMetadata({
+    locale,
+    pathname: `/product/${product.slug}`,
+    title: product.name.trim() || seo("shop.title"),
+    description: product.description?.trim() || seo("shop.description"),
+  });
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -50,9 +56,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const locale = toLocale(rawLocale);
   setRequestLocale(locale);
 
-  const [t, common, product] = await Promise.all([
+  const [t, common, seo, product] = await Promise.all([
     getTranslations({ locale, namespace: "product" }),
     getTranslations({ locale, namespace: "common" }),
+    getTranslations({ locale, namespace: "seo" }),
     getProductBySlug(slug, locale),
   ]);
   if (!product) notFound();
@@ -60,9 +67,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const related = await getRelatedProducts(product.id, product.category?.id ?? null, locale, 4);
   const price =
     product.price === null ? "—" : `${formatPrice(product.price, locale)} ${common("currency")}`;
+  const structuredData = productJsonLd({
+    name: product.name.trim() || seo("shop.title"),
+    description: product.description,
+    image: product.image?.url ?? null,
+    price: product.price,
+    currency: common("currency"),
+    url: `${siteUrl()}${localizedPath(locale, `/product/${product.slug}`)}`,
+    inStock: product.hasStock,
+  });
 
   return (
     <div className="shell pt-8 pb-20 md:pt-12 xl:pb-28">
+      {structuredData && <JsonLd data={structuredData} />}
       <nav
         aria-label={`${t("breadcrumbHome")} / ${t("breadcrumbShop")}`}
         className="text-ink-500 flex flex-wrap items-center gap-2 text-[11px] font-semibold tracking-[0.16em] uppercase"
@@ -102,10 +119,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <p className={`text-sm ${product.hasStock ? "text-forest-700" : "text-ink-500"}`}>
             {product.hasStock ? t("inStock") : t("outOfStock")}
           </p>
-          <VariantPicker
+          <ProductPurchase
             variants={product.variants}
             locale={locale}
             currency={common("currency")}
+            productId={product.id}
+            slug={product.slug}
+            name={product.name}
+            nameFr={product.nameFr}
+            image={product.image?.url ?? null}
+            category={product.category}
           />
         </section>
       </div>

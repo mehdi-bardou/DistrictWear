@@ -7,6 +7,7 @@ import type {
   ProductVariant,
 } from "../supabase/database.types";
 import { createPublicClient } from "../supabase/public";
+import type { FreshVariant } from "../cart/types";
 import { sanitizeSearch } from "./filters";
 import { productImageAlt, productImageUrl } from "./images";
 import type {
@@ -33,6 +34,8 @@ type CatalogItem = {
 
 const SORTS: readonly ShopSort[] = ["featured", "newest", "name", "price-asc", "price-desc"];
 const MAX_ROWS = 500;
+const MAX_AVAILABILITY_IDS = 20;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const DEFAULT_PAGE_SIZE = 12;
 const DEFAULT_FEATURED_LIMIT = 8;
 const DEFAULT_RELATED_LIMIT = 4;
@@ -401,8 +404,38 @@ export async function getProductBySlug(
       alt: productImageAlt(image, locale, name),
     }));
 
-    return { ...product, variants: publicVariants, images: publicImages };
+    return { ...product, nameFr: row.name_fr, variants: publicVariants, images: publicImages };
   });
+}
+
+/** Re-read only server-owned price/stock for cart variants; never trust client values. */
+export async function getVariantAvailability(ids: string[]): Promise<FreshVariant[]> {
+  if (!Array.isArray(ids) || ids.length === 0 || ids.length > MAX_AVAILABILITY_IDS) return [];
+  if (ids.some((id) => typeof id !== "string" || !UUID_PATTERN.test(id))) return [];
+
+  try {
+    const client = await createPublicClient();
+    const { data, error } = await client
+      .from("product_variants")
+      .select("*")
+      .in("id", ids)
+      .eq("is_active", true);
+    if (error) throw new Error(`[storefront] variant availability: ${error.message}`);
+
+    return (Array.isArray(data) ? data : [])
+      .filter((variant) => variant.is_active)
+      .map((variant) => ({
+        variantId: variant.id,
+        price: variant.price,
+        stock: variant.stock,
+        available: variant.stock > 0,
+      }));
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "[storefront] variant availability failed",
+    );
+    throw error;
+  }
 }
 
 export async function getRelatedProducts(

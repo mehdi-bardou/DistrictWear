@@ -3,6 +3,32 @@
     "title": "DISTRICT WEAR — Premium streetwear from Casablanca",
     "description": "Streetwear built for the streets. Discover the DISTRICT WEAR collection."
   },
+  "seo": {
+    "home": {
+      "title": "Premium streetwear from Casablanca",
+      "description": "DISTRICT WEAR — streetwear built for the streets, made in Casablanca. Discover the collection."
+    },
+    "shop": {
+      "title": "Shop",
+      "description": "Browse every DISTRICT WEAR piece: clean cuts, fabrics that hold up and streetwear built for the district."
+    },
+    "cart": {
+      "title": "Your cart",
+      "description": "Review your DISTRICT WEAR cart and complete your order directly on WhatsApp."
+    },
+    "collections": {
+      "title": "Collections",
+      "description": "Explore DISTRICT WEAR collections: considered drops built around a single idea, from Casablanca."
+    },
+    "about": {
+      "title": "About",
+      "description": "The story of DISTRICT WEAR: streetwear from Casablanca, made for the district and built to last."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contact DISTRICT WEAR about sizing, a piece or an order. We reply on WhatsApp."
+    }
+  },
   "nav": {
     "home": "Home",
     "shop": "Shop",
@@ -32,6 +58,12 @@
     "skipToContent": "Skip to content",
     "outOfStock": "Out of stock",
     "currency": "MAD"
+  },
+  "whatsapp": {
+    "greeting": "Hello DISTRICT WEAR, I would like to place an order:",
+    "closing": "Thanks in advance for your reply!",
+    "reference": "Reference",
+    "total": "Total"
   },
   "home": {
     "eyebrow": "Collection 01 — Fall/Winter",
@@ -82,5 +114,76 @@
     "relatedTitle": "You may also like",
     "relatedCopy": "More pieces from the district to discover.",
     "priceLabel": "Price"
+  },
+  "cart": {
+    "add": "Add to cart",
+    "title": "Your cart",
+    "open": "Review your items and complete your order on WhatsApp.",
+    "close": "Close cart",
+    "empty": "Your cart is empty.",
+    "emptyCopy": "Explore the collection and find your next piece.",
+    "continueShopping": "Continue shopping",
+    "viewCart": "View full cart",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "itemCount": "{count, plural, =1 {# item} other {# items}}",
+    "checkout": "Order on WhatsApp",
+    "staleTitle": "Update needed",
+    "unavailable": "This item is no longer available. Please remove it from your cart.",
+    "priceChanged": "The price has changed",
+    "stockChanged": "The available stock has changed",
+    "outOfStock": "Out of stock",
+    "update": "Update",
+    "updateAll": "Update all",
+    "revalidateError": "We could not verify prices and stock. Your cart is saved; please try again later.",
+    "added": "Item added to your cart.",
+    "blocked": "This item is out of stock and cannot be added."
+  },
+  "collections": {
+    "title": "Collections",
+    "intro": "Considered drops built around a single idea. Explore the lines that define the district.",
+    "empty": "Nothing here yet",
+    "emptyCopy": "New pieces are on the way. In the meantime, explore the full shop.",
+    "viewCollection": "View collection",
+    "productsTitle": "The pieces",
+    "back": "Back to collections",
+    "notFound": "This collection could not be found."
+  },
+  "about": {
+    "eyebrow": "Our story — Casablanca",
+    "title": "MADE FOR THE DISTRICT",
+    "lede": "DISTRICT WEAR started with a simple idea: clothes for the street, made with the care usually reserved for something far less everyday.",
+    "manifestoTitle": "The manifesto",
+    "manifesto": "We believe streetwear should be built to live in, not just to be photographed. Every cut is considered, every fabric chosen for how it wears, washes and holds its shape. No seasonal noise, no disposable details — just pieces that earn their place in your rotation.",
+    "principlesTitle": "What we stand for",
+    "principleOne": "01 — Fabric first",
+    "principleOneCopy": "We start with the material and let the construction follow. Weight, drape and feel decide what a piece becomes.",
+    "principleTwo": "02 — Honest cuts",
+    "principleTwoCopy": "Silhouettes that work on real bodies and in real streets. Nothing decorative that gets in the way of wearing it.",
+    "principleThree": "03 — Made to last",
+    "principleThreeCopy": "Small runs, careful finishing and details that survive the wash. We would rather make fewer, better pieces.",
+    "cityTitle": "Casablanca, at work",
+    "cityCopy": "Everything begins in Casablanca — in the workshops, on the streets, in the city that keeps us honest. Craft here is close enough to touch: we work with people who make things properly, and we keep our runs small enough to care about every single piece.",
+    "cta": "Explore the shop"
+  },
+  "contact": {
+    "title": "GET IN TOUCH",
+    "lede": "Questions about sizing, a piece or an order? We are one message away.",
+    "emailLabel": "Email",
+    "instagramLabel": "Instagram",
+    "whatsappLabel": "WhatsApp",
+    "whatsappCopy": "Message our team directly on WhatsApp and we will get back to you there.",
+    "hoursLabel": "Studio hours",
+    "hoursValue": "Monday — Saturday, 10:00 to 19:00 (Casablanca)",
+    "note": "Orders are finalised in chat with our team. No payment is taken online.",
+    "empty": "No contact channels have been published yet. Please check back soon."
+  },
+  "notFound": {
+    "label": "Error 404",
+    "title": "This page left the district",
+    "copy": "The link is broken or the page no longer exists. Head back home or explore the shop.",
+    "home": "Back to home",
+    "shop": "Explore the shop"
   }
 }

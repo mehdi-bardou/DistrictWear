@@ -4,9 +4,11 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
 
 /**
- * Server-only privileged client. Bypasses RLS for admin server actions and
- * storage management. Never import this from a client component or route that
- * returns data to the public storefront.
+ * Reserved server-only privileged client. Currently unused by the app: admin
+ * pages and actions use the cookie-scoped anon client under RLS. If a future
+ * privileged integration uses this client, it bypasses RLS and must stay on
+ * the server — never import it from a client component or a route that returns
+ * data to the public storefront.
  */
 export function createAdminClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

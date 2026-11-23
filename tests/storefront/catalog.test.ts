@@ -16,6 +16,7 @@ import {
   getProducts,
   getPublishedProductSlugs,
   getRelatedProducts,
+  getVariantAvailability,
 } from "../../lib/storefront/catalog";
 
 type Row = Record<string, unknown>;
@@ -507,6 +508,7 @@ describe("getProductBySlug", () => {
     expect(detail).toMatchObject({
       slug: "hoodie-creme",
       name: "Cream Hoodie",
+      nameFr: "Sweat Crème",
       description: "Soft",
       price: 890,
       priceMax: 990,
@@ -675,6 +677,62 @@ describe("getPublishedProductSlugs", () => {
     setup({ products: [{ data: null, error: { message: "db offline" } }] });
 
     await expect(getPublishedProductSlugs()).resolves.toEqual([]);
+    expect(log).toHaveBeenCalledWith(expect.stringContaining("db offline"));
+  });
+});
+
+describe("getVariantAvailability", () => {
+  const firstId = "11111111-1111-4111-8111-111111111111";
+  const secondId = "22222222-2222-4222-8222-222222222222";
+
+  it("reads active variants by id and reports price, stock and availability", async () => {
+    const db = setup({
+      product_variants: [
+        {
+          data: [
+            { id: firstId, price: 250, stock: 3, is_active: true },
+            { id: secondId, price: 390, stock: 0, is_active: true },
+            {
+              id: "33333333-3333-4333-8333-333333333333",
+              price: 1,
+              stock: 9,
+              is_active: false,
+            },
+          ],
+          error: null,
+        },
+      ],
+    });
+
+    await expect(getVariantAvailability([firstId, secondId])).resolves.toEqual([
+      { variantId: firstId, price: 250, stock: 3, available: true },
+      { variantId: secondId, price: 390, stock: 0, available: false },
+    ]);
+    expect(hasFilter(filtersFor(db, "product_variants"), "in", "id", [firstId, secondId])).toBe(
+      true,
+    );
+    expect(hasFilter(filtersFor(db, "product_variants"), "eq", "is_active", true)).toBe(true);
+  });
+
+  it("rejects empty, oversized and malformed id lists without touching Supabase", async () => {
+    setup();
+    mocks.createPublicClient.mockClear();
+
+    await expect(getVariantAvailability([])).resolves.toEqual([]);
+    await expect(
+      getVariantAvailability(
+        Array.from({ length: 21 }, (_, index) => `${index}`.padStart(36, "1")),
+      ),
+    ).resolves.toEqual([]);
+    await expect(getVariantAvailability(["not-a-uuid"])).resolves.toEqual([]);
+    expect(mocks.createPublicClient).not.toHaveBeenCalled();
+  });
+
+  it("throws and logs when the query fails so failure is never mistaken for fresh data", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    setup({ product_variants: [{ data: null, error: { message: "db offline" } }] });
+
+    await expect(getVariantAvailability([firstId])).rejects.toThrow("db offline");
     expect(log).toHaveBeenCalledWith(expect.stringContaining("db offline"));
   });
 });

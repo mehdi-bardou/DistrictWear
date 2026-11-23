@@ -3,6 +3,32 @@
     "title": "DISTRICT WEAR — Streetwear premium à Casablanca",
     "description": "Des pièces de streetwear pensées pour la rue. Découvrez la collection DISTRICT WEAR."
   },
+  "seo": {
+    "home": {
+      "title": "Streetwear premium à Casablanca",
+      "description": "DISTRICT WEAR — des pièces de streetwear pensées pour la rue, façonnées à Casablanca. Découvrez la collection."
+    },
+    "shop": {
+      "title": "Boutique",
+      "description": "Parcourez toutes les pièces DISTRICT WEAR : coupes nettes, matières durables et streetwear pensé pour le quartier."
+    },
+    "cart": {
+      "title": "Votre panier",
+      "description": "Consultez votre panier DISTRICT WEAR et finalisez votre commande directement sur WhatsApp."
+    },
+    "collections": {
+      "title": "Collections",
+      "description": "Découvrez les collections DISTRICT WEAR : des séries pensées autour d'une seule idée, à Casablanca."
+    },
+    "about": {
+      "title": "À propos",
+      "description": "L'histoire de DISTRICT WEAR : un streetwear de Casablanca, fait pour le quartier et pensé pour durer."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contactez DISTRICT WEAR pour une question sur une taille, une pièce ou une commande. Réponse sur WhatsApp."
+    }
+  },
   "nav": {
     "home": "Accueil",
     "shop": "Boutique",
@@ -32,6 +58,12 @@
     "skipToContent": "Aller au contenu",
     "outOfStock": "Épuisé",
     "currency": "MAD"
+  },
+  "whatsapp": {
+    "greeting": "Bonjour DISTRICT WEAR, je souhaite passer une commande :",
+    "closing": "Merci par avance pour votre retour !",
+    "reference": "Référence",
+    "total": "Total"
   },
   "home": {
     "eyebrow": "Collection 01 — Automne/Hiver",
@@ -82,5 +114,76 @@
     "relatedTitle": "Vous aimerez aussi",
     "relatedCopy": "D'autres pièces du quartier à découvrir.",
     "priceLabel": "Prix"
+  },
+  "cart": {
+    "add": "Ajouter au panier",
+    "title": "Votre panier",
+    "open": "Consultez vos articles et finalisez votre commande sur WhatsApp.",
+    "close": "Fermer le panier",
+    "empty": "Votre panier est vide.",
+    "emptyCopy": "Découvrez la collection et trouvez votre prochaine pièce.",
+    "continueShopping": "Continuer mes achats",
+    "viewCart": "Voir le panier complet",
+    "remove": "Retirer",
+    "quantity": "Quantité",
+    "subtotal": "Sous-total",
+    "itemCount": "{count, plural, =1 {# article} other {# articles}}",
+    "checkout": "Commander sur WhatsApp",
+    "staleTitle": "Mise à jour nécessaire",
+    "unavailable": "Cet article n'est plus disponible. Retirez-le du panier.",
+    "priceChanged": "Le prix a changé",
+    "stockChanged": "Le stock disponible a changé",
+    "outOfStock": "Épuisé",
+    "update": "Mettre à jour",
+    "updateAll": "Tout mettre à jour",
+    "revalidateError": "Impossible de vérifier les prix et les stocks. Votre panier est conservé ; réessayez plus tard.",
+    "added": "Article ajouté au panier.",
+    "blocked": "Cet article est épuisé et ne peut pas être ajouté."
+  },
+  "collections": {
+    "title": "Collections",
+    "intro": "Des séries pensées autour d'une seule idée. Découvrez les lignes qui définissent le quartier.",
+    "empty": "Rien ici pour le moment",
+    "emptyCopy": "De nouvelles pièces arrivent bientôt. En attendant, découvrez toute la boutique.",
+    "viewCollection": "Voir la collection",
+    "productsTitle": "Les pièces",
+    "back": "Retour aux collections",
+    "notFound": "Cette collection est introuvable."
+  },
+  "about": {
+    "eyebrow": "Notre histoire — Casablanca",
+    "title": "FAIT POUR LE QUARTIER",
+    "lede": "DISTRICT WEAR est né d'une idée simple : des vêtements pour la rue, fabriqués avec le soin qu'on réserve d'habitude à bien moins quotidien.",
+    "manifestoTitle": "Le manifeste",
+    "manifesto": "Nous pensons que le streetwear doit être fait pour être vécu, pas seulement photographié. Chaque coupe est réfléchie, chaque matière choisie pour sa tenue, son lavage et sa durée. Pas de bruit saisonnier, pas de détails jetables : seulement des pièces qui gagnent leur place dans votre garde-robe.",
+    "principlesTitle": "Nos engagements",
+    "principleOne": "01 — La matière d'abord",
+    "principleOneCopy": "Nous partons du tissu et laissons la construction suivre. Le poids, le tombé et le toucher décident de ce que devient une pièce.",
+    "principleTwo": "02 — Des coupes honnêtes",
+    "principleTwoCopy": "Des silhouettes qui fonctionnent sur de vrais corps et dans de vraies rues. Rien de décoratif qui gêne le port.",
+    "principleThree": "03 — Fait pour durer",
+    "principleThreeCopy": "Petites séries, finitions soignées et détails qui survivent au lavage. Nous préférons faire moins, mais mieux.",
+    "cityTitle": "Casablanca, au travail",
+    "cityCopy": "Tout commence à Casablanca — dans les ateliers, dans la rue, dans cette ville qui nous garde honnêtes. Ici, le savoir-faire est à portée de main : nous travaillons avec des gens qui font les choses bien, et nous gardons des séries assez courtes pour soigner chaque pièce.",
+    "cta": "Découvrir la boutique"
+  },
+  "contact": {
+    "title": "PARLONS-EN",
+    "lede": "Une question sur une taille, une pièce ou une commande ? Nous sommes à un message de distance.",
+    "emailLabel": "E-mail",
+    "instagramLabel": "Instagram",
+    "whatsappLabel": "WhatsApp",
+    "whatsappCopy": "Écrivez directement à notre équipe sur WhatsApp, nous vous répondrons là-bas.",
+    "hoursLabel": "Horaires de l'atelier",
+    "hoursValue": "Lundi — samedi, 10h à 19h (Casablanca)",
+    "note": "Les commandes sont finalisées par chat avec notre équipe. Aucun paiement n'est effectué en ligne.",
+    "empty": "Aucun moyen de contact n'est encore publié. Revenez bientôt."
+  },
+  "notFound": {
+    "label": "Erreur 404",
+    "title": "Cette page a quitté le quartier",
+    "copy": "Le lien est rompu ou la page n'existe plus. Reprenez depuis l'accueil ou explorez la boutique.",
+    "home": "Retour à l'accueil",
+    "shop": "Explorer la boutique"
   }
 }

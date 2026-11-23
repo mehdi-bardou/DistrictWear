@@ -24,11 +24,7 @@ export async function ProductCard({ product, priority = false }: ProductCardProp
     .join(", ");
 
   return (
-    <Link
-      href={`/product/${product.slug}`}
-      aria-label={accessibleName}
-      className="group block focus-visible:outline-none"
-    >
+    <Link href={`/product/${product.slug}`} aria-label={accessibleName} className="group block">
       <article className="flex h-full flex-col">
         <div
           className={`bg-cream-200 relative aspect-[4/5] w-full overflow-hidden ${
