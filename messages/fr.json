@@ -30,6 +30,7 @@
   },
   "common": {
     "skipToContent": "Aller au contenu",
+    "outOfStock": "Épuisé",
     "currency": "MAD"
   },
   "home": {

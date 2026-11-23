@@ -30,6 +30,7 @@
   },
   "common": {
     "skipToContent": "الانتقال إلى المحتوى",
+    "outOfStock": "نفد المخزون",
     "currency": "MAD"
   },
   "home": {

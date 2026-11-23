@@ -8,9 +8,8 @@ function firstValue(value: string | string[] | undefined): string | undefined {
 }
 
 function integerValue(value: string | undefined, fallback: number): number {
-  if (value === undefined) return fallback;
-  const parsed = Number(value);
-  return Number.isInteger(parsed) ? parsed : fallback;
+  if (value === undefined || !/^\d+$/.test(value)) return fallback;
+  return Number(value);
 }
 
 /** Turn raw URL params into a bounded, typed catalogue query. */

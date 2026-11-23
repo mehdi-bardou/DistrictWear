@@ -415,6 +415,14 @@ describe("getProducts", () => {
     expect(log).toHaveBeenCalledWith(expect.stringContaining("db offline"));
   });
 
+  it("ignores a blank search without adding an .or() filter", async () => {
+    const db = setup();
+
+    await getProducts("fr", { search: "   " });
+
+    expect(filtersFor(db, "products").some((call) => call.method === "or")).toBe(false);
+  });
+
   it("uses eight featured products by default", async () => {
     const db = setup();
     await getFeaturedProducts("fr");
@@ -526,6 +534,40 @@ describe("getRelatedProducts", () => {
     expect(
       hasFilter(findFilters(db, "products", "neq", "id", "p1"), "eq", "is_published", true),
     ).toBe(true);
+  });
+
+  it("fills remaining related slots with generic published products", async () => {
+    const sameCollection: Row = {
+      ...productRows[1],
+      id: "p3",
+      slug: "cap-vert",
+      name_en: "Green Cap",
+      category_id: "cat-2",
+      collection_id: "col-1",
+      sort_order: 3,
+    };
+    const generic: Row = {
+      ...productRows[1],
+      id: "p4",
+      slug: "socks",
+      name_en: "Socks",
+      category_id: "cat-3",
+      collection_id: null,
+      sort_order: 4,
+    };
+    setup({
+      products: [
+        {
+          data: [{ id: "p1", category_id: "cat-1", collection_id: "col-1", is_published: true }],
+          error: null,
+        },
+        { data: [productRows[1], sameCollection, generic], error: null },
+      ],
+    });
+
+    const related = await getRelatedProducts("p1", "cat-1", "en", 4);
+
+    expect(related.map((item) => item.id)).toEqual(["p2", "p3", "p4"]);
   });
 
   it("returns an empty array when there are no other published products", async () => {

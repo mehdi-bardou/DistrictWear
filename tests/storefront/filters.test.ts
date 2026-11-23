@@ -30,6 +30,14 @@ describe("parseShopParams", () => {
     });
   });
 
+  it("rejects exponential notation and blank numeric params", () => {
+    expect(parseShopParams({ page: "1e2", pageSize: "1e2" })).toMatchObject({
+      page: 1,
+      pageSize: 12,
+    });
+    expect(parseShopParams({ page: "", pageSize: "" })).toMatchObject({ page: 1, pageSize: 12 });
+  });
+
   it("takes the first array value and trims strings", () => {
     expect(
       parseShopParams({

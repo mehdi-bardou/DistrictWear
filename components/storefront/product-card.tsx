@@ -15,11 +15,18 @@ export async function ProductCard({ product, priority = false }: ProductCardProp
   const locale: Locale = rawLocale === "ar" || rawLocale === "en" ? rawLocale : "fr";
   const price =
     product.price === null ? "—" : `${formatPrice(product.price, locale)} ${t("currency")}`;
+  const accessibleName = [
+    product.name,
+    product.price === null ? null : price,
+    product.hasStock ? null : t("outOfStock"),
+  ]
+    .filter((part): part is string => part !== null)
+    .join(", ");
 
   return (
     <Link
       href={`/product/${product.slug}`}
-      aria-label={product.price === null ? product.name : `${product.name}, ${price}`}
+      aria-label={accessibleName}
       className="group block focus-visible:outline-none"
     >
       <article className="flex h-full flex-col">
