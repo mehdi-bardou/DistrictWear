@@ -30,6 +30,7 @@
   },
   "common": {
     "skipToContent": "Skip to content",
+    "outOfStock": "Out of stock",
     "currency": "MAD"
   },
   "home": {
@@ -38,6 +39,48 @@
     "lede": "Clean cuts, fabrics that hold up. Streetwear from Casablanca, without the noise.",
     "cta": "Explore the shop",
     "secondary": "View collections",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "featuredTitle": "Selected pieces",
+    "featuredCopy": "A few pieces picked to represent the district, ready to get you started.",
+    "featuredEmpty": "No featured pieces right now. Check back soon.",
+    "categoriesTitle": "Shop by category",
+    "categoriesCopy": "Find the pieces that fit your style, one category at a time."
+  },
+  "shop": {
+    "title": "Shop the collection",
+    "subtitle": "Every piece, built for the district. Filter, search and find your next staple.",
+    "all": "All",
+    "categoryLabel": "Filter by category",
+    "sortLabel": "Sort products",
+    "sortFeatured": "Featured",
+    "sortNewest": "Newest",
+    "sortName": "Name",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "searchLabel": "Search products",
+    "searchPlaceholder": "Search the collection",
+    "searchSubmit": "Search",
+    "results": "{count} products",
+    "resultsOne": "{count} product",
+    "empty": "No products match your filters.",
+    "emptyReset": "Clear filters",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "product": {
+    "breadcrumbHome": "Home",
+    "breadcrumbShop": "Shop",
+    "galleryLabel": "Product gallery",
+    "thumbnail": "View image",
+    "colorLabel": "Color",
+    "sizeLabel": "Size",
+    "unavailable": "This product is unavailable.",
+    "outOfStock": "Out of stock",
+    "inStock": "In stock",
+    "selectColor": "Select a color",
+    "selectSize": "Select a size",
+    "relatedTitle": "You may also like",
+    "relatedCopy": "More pieces from the district to discover.",
+    "priceLabel": "Price"
   }
 }

@@ -1,6 +1,11 @@
 import { ArrowDownRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { ProductCard } from "@/components/storefront/product-card";
 import { Link } from "@/i18n/navigation";
+import { getActiveCategories, getFeaturedProducts } from "@/lib/storefront/catalog";
+import type { Locale } from "@/lib/storefront/types";
+
+export const revalidate = 300;
 
 type HomePageProps = { params: Promise<{ locale: string }> };
 
@@ -8,6 +13,11 @@ export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "home" });
+  const catalogLocale: Locale = locale === "ar" || locale === "en" ? locale : "fr";
+  const [products, categories] = await Promise.all([
+    getFeaturedProducts(catalogLocale, 8),
+    getActiveCategories(catalogLocale),
+  ]);
 
   return (
     <>
@@ -48,15 +58,47 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className="rule" />
       </div>
 
-      <section aria-hidden="true" className="shell mt-10">
-        <div className="grid gap-3 md:grid-cols-12">
-          <div className="bg-forest-900 h-64 md:col-span-7 md:h-[32rem]" />
-          <div className="grid gap-3 md:col-span-5">
-            <div className="bg-cream-200 h-40 md:h-[15.5rem]" />
-            <div className="bg-ink-900 h-40 md:h-[15.5rem]" />
-          </div>
-        </div>
+      <section aria-labelledby="featured-heading" className="shell mt-20 md:mt-28">
+        <h2 id="featured-heading" className="display-lg text-forest-900">
+          {t("featuredTitle")}
+        </h2>
+        <p className="text-ink-700 mt-4 max-w-xl text-base leading-relaxed">{t("featuredCopy")}</p>
+
+        {products.length > 0 ? (
+          <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 xl:grid-cols-4 xl:gap-8">
+            {products.map((product, index) => (
+              <li key={product.id}>
+                <ProductCard product={product} priority={index < 4} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-ink-700 mt-10 text-sm">{t("featuredEmpty")}</p>
+        )}
       </section>
+
+      {categories.length > 0 && (
+        <section aria-labelledby="categories-heading" className="shell mt-20 md:mt-28">
+          <h2 id="categories-heading" className="display-lg text-forest-900">
+            {t("categoriesTitle")}
+          </h2>
+          <p className="text-ink-700 mt-4 max-w-xl text-base leading-relaxed">
+            {t("categoriesCopy")}
+          </p>
+          <ul className="mt-8 flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <li key={category.id}>
+                <Link
+                  href={`/shop?category=${encodeURIComponent(category.slug)}`}
+                  className="border-ink-900/20 text-ink-900 hover:border-forest-900 hover:bg-forest-900 hover:text-cream-100 inline-flex items-center border px-5 py-3 text-xs font-bold tracking-[0.16em] uppercase transition-opacity hover:opacity-85"
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </>
   );
 }

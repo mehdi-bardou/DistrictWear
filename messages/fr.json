@@ -30,6 +30,7 @@
   },
   "common": {
     "skipToContent": "Aller au contenu",
+    "outOfStock": "Épuisé",
     "currency": "MAD"
   },
   "home": {
@@ -38,6 +39,48 @@
     "lede": "Des coupes nettes, des matières qui tiennent. Le streetwear de Casablanca, sans bruit.",
     "cta": "Découvrir la boutique",
     "secondary": "Voir les collections",
-    "scroll": "Défiler"
+    "scroll": "Défiler",
+    "featuredTitle": "Notre sélection",
+    "featuredCopy": "Quelques pièces choisies pour représenter le quartier.",
+    "featuredEmpty": "Aucune pièce à la une pour le moment. Revenez bientôt.",
+    "categoriesTitle": "Découvrir par catégorie",
+    "categoriesCopy": "Trouvez rapidement la pièce qui vous ressemble."
+  },
+  "shop": {
+    "title": "Découvrir la boutique",
+    "subtitle": "Toutes nos pièces, pensées pour le quartier. Filtrez, cherchez et trouvez votre prochain essentiel.",
+    "all": "Tout",
+    "categoryLabel": "Filtrer par catégorie",
+    "sortLabel": "Trier les produits",
+    "sortFeatured": "À la une",
+    "sortNewest": "Nouveautés",
+    "sortName": "Nom",
+    "sortPriceAsc": "Prix croissant",
+    "sortPriceDesc": "Prix décroissant",
+    "searchLabel": "Rechercher un produit",
+    "searchPlaceholder": "Rechercher dans la collection",
+    "searchSubmit": "Rechercher",
+    "results": "{count} produits",
+    "resultsOne": "{count} produit",
+    "empty": "Aucun produit ne correspond à vos filtres.",
+    "emptyReset": "Effacer les filtres",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "product": {
+    "breadcrumbHome": "Accueil",
+    "breadcrumbShop": "Boutique",
+    "galleryLabel": "Galerie du produit",
+    "thumbnail": "Voir l'image",
+    "colorLabel": "Couleur",
+    "sizeLabel": "Taille",
+    "unavailable": "Ce produit n'est pas disponible.",
+    "outOfStock": "Épuisé",
+    "inStock": "En stock",
+    "selectColor": "Choisir une couleur",
+    "selectSize": "Choisir une taille",
+    "relatedTitle": "Vous aimerez aussi",
+    "relatedCopy": "D'autres pièces du quartier à découvrir.",
+    "priceLabel": "Prix"
   }
 }

@@ -30,6 +30,7 @@
   },
   "common": {
     "skipToContent": "الانتقال إلى المحتوى",
+    "outOfStock": "نفد المخزون",
     "currency": "MAD"
   },
   "home": {
@@ -38,6 +39,48 @@
     "lede": "قصّات نظيفة وخامات تصمد. أزياء شارع من الدار البيضاء، بلا ضجيج.",
     "cta": "اكتشف المتجر",
     "secondary": "شاهد المجموعات",
-    "scroll": "مرّر"
+    "scroll": "مرّر",
+    "featuredTitle": "قطع مختارة",
+    "featuredCopy": "مختارات من قطعنا المصممة للشارع، اختيرت بعناية لتبدأ بها الاستكشاف.",
+    "featuredEmpty": "لا توجد قطع مميزة في الوقت الحالي. تفضل بزيارتنا قريباً.",
+    "categoriesTitle": "تسوّق حسب الفئة",
+    "categoriesCopy": "اختر الفئة التي تناسب أسلوبك واكتشف ما فيها."
+  },
+  "shop": {
+    "title": "تسوّق المجموعة",
+    "subtitle": "كل قطعنا المصممة للحي. صفِّ وابحث واعثر على قطعتك القادمة.",
+    "all": "الكل",
+    "categoryLabel": "تصفية حسب الفئة",
+    "sortLabel": "ترتيب المنتجات",
+    "sortFeatured": "المميزة",
+    "sortNewest": "الأحدث",
+    "sortName": "الاسم",
+    "sortPriceAsc": "السعر: من الأقل إلى الأعلى",
+    "sortPriceDesc": "السعر: من الأعلى إلى الأقل",
+    "searchLabel": "ابحث عن منتج",
+    "searchPlaceholder": "ابحث في المجموعة",
+    "searchSubmit": "بحث",
+    "results": "{count} منتجات",
+    "resultsOne": "{count} منتج",
+    "empty": "لا توجد منتجات مطابقة لخياراتك.",
+    "emptyReset": "مسح عوامل التصفية",
+    "previous": "السابق",
+    "next": "التالي"
+  },
+  "product": {
+    "breadcrumbHome": "الرئيسية",
+    "breadcrumbShop": "المتجر",
+    "galleryLabel": "معرض صور المنتج",
+    "thumbnail": "عرض الصورة",
+    "colorLabel": "اللون",
+    "sizeLabel": "المقاس",
+    "unavailable": "هذا المنتج غير متوفر حالياً.",
+    "outOfStock": "نفد المخزون",
+    "inStock": "متوفر",
+    "selectColor": "اختر اللون",
+    "selectSize": "اختر المقاس",
+    "relatedTitle": "قد يعجبك أيضاً",
+    "relatedCopy": "قطع أخرى من الحي تستحق الاكتشاف.",
+    "priceLabel": "السعر"
   }
 }
