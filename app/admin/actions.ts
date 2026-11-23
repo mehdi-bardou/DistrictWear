@@ -37,6 +37,11 @@ function failure(error: { message: string } | null): ActionResult {
   return error ? { ok: false, error: error.message } : { ok: true };
 }
 
+/** Product changes affect both the list and its nested editor route. */
+function revalidateProducts() {
+  revalidatePath("/admin/products", "layout");
+}
+
 async function write(
   table: "categories" | "collections" | "products" | "settings",
   row: object,
@@ -72,7 +77,7 @@ export async function saveProduct(input: unknown, id?: string): Promise<ActionRe
   const parsed = productSchema.safeParse(input);
   if (!parsed.success) return invalid;
   const { error } = await write("products", productRow(parsed.data), id);
-  revalidatePath("/admin/products");
+  revalidateProducts();
   return failure(error);
 }
 
@@ -90,7 +95,7 @@ export async function saveVariant(
   const { error } = await (id
     ? supabase.from("product_variants").update(omit(row, "product_id")).eq("id", id)
     : supabase.from("product_variants").insert(row));
-  revalidatePath("/admin/products");
+  revalidateProducts();
   return failure(error);
 }
 
@@ -108,7 +113,7 @@ export async function saveImage(
   const { error } = await (id
     ? supabase.from("product_images").update(omit(row, "product_id")).eq("id", id)
     : supabase.from("product_images").insert(row));
-  revalidatePath("/admin/products");
+  revalidateProducts();
   return failure(error);
 }
 
@@ -141,7 +146,7 @@ export async function setProductFlag(
       : { is_featured: flagValue.data };
   const supabase = await createClient();
   const { error } = await supabase.from("products").update(patch).eq("id", ids.data);
-  revalidatePath("/admin/products");
+  revalidateProducts();
   return failure(error);
 }
 
@@ -155,7 +160,7 @@ export async function setVariantStock(id: string, stock: number): Promise<Action
     .from("product_variants")
     .update({ stock: value.data })
     .eq("id", ids.data);
-  revalidatePath("/admin/products");
+  revalidateProducts();
   return failure(error);
 }
 
@@ -171,7 +176,7 @@ export async function reorderImages(ids: string[]): Promise<ActionResult> {
       .eq("id", id);
     if (error) return failure(error);
   }
-  revalidatePath("/admin/products");
+  revalidateProducts();
   return { ok: true };
 }
 
@@ -184,9 +189,11 @@ async function remove(
   if (!ids.success) return invalid;
   const supabase = await createClient();
   const { error } = await supabase.from(table).delete().eq("id", ids.data);
-  revalidatePath(
-    `/admin/${table === "product_images" || table === "product_variants" ? "products" : table}`,
-  );
+  if (table === "products" || table === "product_images" || table === "product_variants") {
+    revalidateProducts();
+  } else {
+    revalidatePath(`/admin/${table}`);
+  }
   return failure(error);
 }
 

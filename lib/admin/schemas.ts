@@ -11,10 +11,11 @@ const slug = z
 const localizedName = z.string().trim().min(1).max(160);
 const localizedText = z.string().trim().max(5000);
 const sortOrder = z.coerce.number().int().min(0);
-const optionalUuid = z.preprocess(
-  (value) => (value === "" || value === undefined ? null : value),
-  z.string().uuid().nullable(),
-);
+/** HTML form fields submit "" for empty optionals; normalize them to null. */
+const emptyToNull = (value: unknown) => (value === "" || value === undefined ? null : value);
+const optionalUuid = z.preprocess(emptyToNull, z.string().uuid().nullable());
+const optionalUrl = z.preprocess(emptyToNull, z.string().url().nullable());
+const optionalEmail = z.preprocess(emptyToNull, z.string().trim().email().nullable());
 
 export const loginSchema = z.object({
   email: z.string().trim().min(1).email(),
@@ -38,7 +39,7 @@ export const collectionSchema = z.object({
   description_fr: localizedText.nullable(),
   description_ar: localizedText.nullable(),
   description_en: localizedText.nullable(),
-  cover_image: z.string().url().nullable(),
+  cover_image: optionalUrl,
   is_published: z.boolean(),
   sort_order: sortOrder,
 });
@@ -88,8 +89,8 @@ export const settingsSchema = z.object({
     .string()
     .trim()
     .regex(/^[0-9()+.\s-]{8,20}$/, "Enter a valid phone number"),
-  contact_email: z.string().trim().email().nullable(),
-  instagram_url: z.string().url().nullable(),
+  contact_email: optionalEmail,
+  instagram_url: optionalUrl,
   inquiry_logging_enabled: z.boolean(),
 });
 
@@ -100,3 +101,15 @@ export type ProductInput = z.infer<typeof productSchema>;
 export type VariantInput = z.infer<typeof variantSchema>;
 export type ImageInput = z.infer<typeof imageSchema>;
 export type SettingsInput = z.infer<typeof settingsSchema>;
+
+/**
+ * React Hook Form v7 + Zod v4 resolve against the schema *input* type, which
+ * keeps `unknown` for coerced numbers. Forms are typed with `...Form` and hand
+ * the parsed `...Input` value to `handleSubmit`.
+ */
+export type CategoryForm = z.input<typeof categorySchema>;
+export type CollectionForm = z.input<typeof collectionSchema>;
+export type ProductForm = z.input<typeof productSchema>;
+export type VariantForm = z.input<typeof variantSchema>;
+export type ImageForm = z.input<typeof imageSchema>;
+export type SettingsForm = z.input<typeof settingsSchema>;

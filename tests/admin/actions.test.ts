@@ -132,7 +132,7 @@ describe("saveProduct", () => {
       category_id: null,
       collection_id: null,
     });
-    expect(mocks.revalidatePath).toHaveBeenCalledWith("/admin/products");
+    expect(mocks.revalidatePath).toHaveBeenCalledWith("/admin/products", "layout");
   });
 });
 
@@ -262,7 +262,7 @@ describe("catalogue deletion", () => {
     expect(db.calls.delete).toHaveBeenCalledTimes(2);
     expect(db.calls.delete.mock.results[0]?.value.eq).toHaveBeenCalledWith("id", "cat-1");
     expect(db.calls.delete.mock.results[1]?.value.eq).toHaveBeenCalledWith("id", "prod-1");
-    expect(mocks.revalidatePath).toHaveBeenCalledWith("/admin/products");
+    expect(mocks.revalidatePath).toHaveBeenCalledWith("/admin/products", "layout");
   });
 });
 
