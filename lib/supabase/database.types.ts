@@ -1,9 +1,14 @@
 /** Hand-maintained mirror of db/migrations/*.sql. Regenerate if Supabase CLI is added. */
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
+/** PostgREST requires a Relationships key on every table; we declare no joins. */
+type WithRelationships<Tables> = {
+  [Name in keyof Tables]: Tables[Name] & { Relationships: [] };
+};
+
 export type Database = {
   public: {
-    Tables: {
+    Tables: WithRelationships<{
       profiles: {
         Row: {
           id: string;
@@ -286,7 +291,7 @@ export type Database = {
           attempt_count?: number;
         };
       };
-    };
+    }>;
     Views: Record<never, never>;
     Functions: {
       is_admin: {
