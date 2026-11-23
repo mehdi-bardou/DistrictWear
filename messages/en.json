@@ -113,5 +113,44 @@
     "revalidateError": "We could not verify prices and stock. Your cart is saved; please try again later.",
     "added": "Item added to your cart.",
     "blocked": "This item is out of stock and cannot be added."
+  },
+  "collections": {
+    "title": "Collections",
+    "intro": "Considered drops built around a single idea. Explore the lines that define the district.",
+    "empty": "Nothing here yet",
+    "emptyCopy": "New pieces are on the way. In the meantime, explore the full shop.",
+    "viewCollection": "View collection",
+    "productsTitle": "The pieces",
+    "back": "Back to collections",
+    "notFound": "This collection could not be found."
+  },
+  "about": {
+    "eyebrow": "Our story — Casablanca",
+    "title": "MADE FOR THE DISTRICT",
+    "lede": "DISTRICT WEAR started with a simple idea: clothes for the street, made with the care usually reserved for something far less everyday.",
+    "manifestoTitle": "The manifesto",
+    "manifesto": "We believe streetwear should be built to live in, not just to be photographed. Every cut is considered, every fabric chosen for how it wears, washes and holds its shape. No seasonal noise, no disposable details — just pieces that earn their place in your rotation.",
+    "principlesTitle": "What we stand for",
+    "principleOne": "01 — Fabric first",
+    "principleOneCopy": "We start with the material and let the construction follow. Weight, drape and feel decide what a piece becomes.",
+    "principleTwo": "02 — Honest cuts",
+    "principleTwoCopy": "Silhouettes that work on real bodies and in real streets. Nothing decorative that gets in the way of wearing it.",
+    "principleThree": "03 — Made to last",
+    "principleThreeCopy": "Small runs, careful finishing and details that survive the wash. We would rather make fewer, better pieces.",
+    "cityTitle": "Casablanca, at work",
+    "cityCopy": "Everything begins in Casablanca — in the workshops, on the streets, in the city that keeps us honest. Craft here is close enough to touch: we work with people who make things properly, and we keep our runs small enough to care about every single piece.",
+    "cta": "Explore the shop"
+  },
+  "contact": {
+    "title": "GET IN TOUCH",
+    "lede": "Questions about sizing, a piece or an order? We are one message away.",
+    "emailLabel": "Email",
+    "instagramLabel": "Instagram",
+    "whatsappLabel": "WhatsApp",
+    "whatsappCopy": "Message our team directly on WhatsApp and we will get back to you there.",
+    "hoursLabel": "Studio hours",
+    "hoursValue": "Monday — Saturday, 10:00 to 19:00 (Casablanca)",
+    "note": "Orders are finalised in chat with our team. No payment is taken online.",
+    "empty": "No contact channels have been published yet. Please check back soon."
   }
 }

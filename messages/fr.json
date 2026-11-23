@@ -113,5 +113,44 @@
     "revalidateError": "Impossible de vérifier les prix et les stocks. Votre panier est conservé ; réessayez plus tard.",
     "added": "Article ajouté au panier.",
     "blocked": "Cet article est épuisé et ne peut pas être ajouté."
+  },
+  "collections": {
+    "title": "Collections",
+    "intro": "Des séries pensées autour d'une seule idée. Découvrez les lignes qui définissent le quartier.",
+    "empty": "Rien ici pour le moment",
+    "emptyCopy": "De nouvelles pièces arrivent bientôt. En attendant, découvrez toute la boutique.",
+    "viewCollection": "Voir la collection",
+    "productsTitle": "Les pièces",
+    "back": "Retour aux collections",
+    "notFound": "Cette collection est introuvable."
+  },
+  "about": {
+    "eyebrow": "Notre histoire — Casablanca",
+    "title": "FAIT POUR LE QUARTIER",
+    "lede": "DISTRICT WEAR est né d'une idée simple : des vêtements pour la rue, fabriqués avec le soin qu'on réserve d'habitude à bien moins quotidien.",
+    "manifestoTitle": "Le manifeste",
+    "manifesto": "Nous pensons que le streetwear doit être fait pour être vécu, pas seulement photographié. Chaque coupe est réfléchie, chaque matière choisie pour sa tenue, son lavage et sa durée. Pas de bruit saisonnier, pas de détails jetables : seulement des pièces qui gagnent leur place dans votre garde-robe.",
+    "principlesTitle": "Nos engagements",
+    "principleOne": "01 — La matière d'abord",
+    "principleOneCopy": "Nous partons du tissu et laissons la construction suivre. Le poids, le tombé et le toucher décident de ce que devient une pièce.",
+    "principleTwo": "02 — Des coupes honnêtes",
+    "principleTwoCopy": "Des silhouettes qui fonctionnent sur de vrais corps et dans de vraies rues. Rien de décoratif qui gêne le port.",
+    "principleThree": "03 — Fait pour durer",
+    "principleThreeCopy": "Petites séries, finitions soignées et détails qui survivent au lavage. Nous préférons faire moins, mais mieux.",
+    "cityTitle": "Casablanca, au travail",
+    "cityCopy": "Tout commence à Casablanca — dans les ateliers, dans la rue, dans cette ville qui nous garde honnêtes. Ici, le savoir-faire est à portée de main : nous travaillons avec des gens qui font les choses bien, et nous gardons des séries assez courtes pour soigner chaque pièce.",
+    "cta": "Découvrir la boutique"
+  },
+  "contact": {
+    "title": "PARLONS-EN",
+    "lede": "Une question sur une taille, une pièce ou une commande ? Nous sommes à un message de distance.",
+    "emailLabel": "E-mail",
+    "instagramLabel": "Instagram",
+    "whatsappLabel": "WhatsApp",
+    "whatsappCopy": "Écrivez directement à notre équipe sur WhatsApp, nous vous répondrons là-bas.",
+    "hoursLabel": "Horaires de l'atelier",
+    "hoursValue": "Lundi — samedi, 10h à 19h (Casablanca)",
+    "note": "Les commandes sont finalisées par chat avec notre équipe. Aucun paiement n'est effectué en ligne.",
+    "empty": "Aucun moyen de contact n'est encore publié. Revenez bientôt."
   }
 }
