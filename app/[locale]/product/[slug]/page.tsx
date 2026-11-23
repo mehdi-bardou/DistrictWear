@@ -56,9 +56,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const locale = toLocale(rawLocale);
   setRequestLocale(locale);
 
-  const [t, common, product] = await Promise.all([
+  const [t, common, seo, product] = await Promise.all([
     getTranslations({ locale, namespace: "product" }),
     getTranslations({ locale, namespace: "common" }),
+    getTranslations({ locale, namespace: "seo" }),
     getProductBySlug(slug, locale),
   ]);
   if (!product) notFound();
@@ -67,7 +68,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const price =
     product.price === null ? "—" : `${formatPrice(product.price, locale)} ${common("currency")}`;
   const structuredData = productJsonLd({
-    name: product.name,
+    name: product.name.trim() || seo("shop.title"),
     description: product.description,
     image: product.image?.url ?? null,
     price: product.price,

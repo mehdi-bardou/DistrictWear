@@ -224,8 +224,9 @@ non-Netlify hosts, strip the header at your own edge or proxy before it reaches 
   already 404 and the localised not-found page appears after hydration. This is an accepted platform
   limitation, not a broken deployment.
 - **Motion trade-off:** `initial={{opacity:0}}` on revealed content keeps main content hidden until
-  hydration. Global reduced-motion CSS and zero-duration motion protect users who prefer reduced
-  motion; it is a deliberate performance/polish trade-off.
+  hydration. Without JavaScript, revealed content remains hidden. Global reduced-motion CSS and
+  zero-duration motion protect users who prefer reduced motion; it is a deliberate
+  performance/polish trade-off.
 - **Sandbox npm install warning:** in restricted/sandboxed environments, install scripts for
   `@swc/core` and `@parcel/watcher` may fall outside the allow-list. This is a non-blocking install
   observation; `npm ci` still installs the packages and builds succeed.
